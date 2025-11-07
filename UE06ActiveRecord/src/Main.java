@@ -1,4 +1,5 @@
-void main(){
 
+void main(){
     IO.print(String.format("Test"));
+
 }

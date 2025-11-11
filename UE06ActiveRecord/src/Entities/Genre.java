@@ -1,6 +1,8 @@
 package Entities;
 
-public class Genre {
+import db.DbActions;
+
+public class Genre implements DbActions{
     private String genre;
 
     public String GetGenre(){
@@ -10,4 +12,6 @@ public class Genre {
         genre = name;
     }
 
+    public void insert(){
+    }
 }

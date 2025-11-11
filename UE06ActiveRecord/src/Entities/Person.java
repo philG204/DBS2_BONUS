@@ -16,16 +16,13 @@ public class Person implements DbActions {
     }
 
     @Override
-    public boolean insert() {
-        return false;
+    public void insert() {
     }
 
-    @Override
     public boolean update() {
         return false;
     }
 
-    @Override
     public boolean delete() {
         return false;
     }

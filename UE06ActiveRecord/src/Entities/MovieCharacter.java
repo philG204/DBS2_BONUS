@@ -1,6 +1,8 @@
 package Entities;
 
-public class MovieCharacter {
+import db.DbActions;
+
+public class MovieCharacter implements DbActions {
     private long movieId;
     private long charId;
     private String character;
@@ -17,4 +19,8 @@ public class MovieCharacter {
     public void SetPosition(int position) { this.position = position; }
     public String GetAlias() { return alias; }
     public void SetAlias(String alias) { this.alias = alias; }
+
+
+    public void insert() {
+    }
 }

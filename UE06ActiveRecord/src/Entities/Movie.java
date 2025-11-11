@@ -1,8 +1,9 @@
 package Entities;
 
 import java.util.Date;
+import db.DbActions;
 
-public class Movie {
+public class Movie implements DbActions {
     private long id;
     private String title;
     private int year;
@@ -27,5 +28,17 @@ public class Movie {
     }
     public void SetType(char type){
         this.type = type;
+    }
+
+    public void insert(){
+
+    }
+
+    public boolean update(){
+        return false;
+    }
+
+    public boolean delete(){
+        return false;
     }
 }

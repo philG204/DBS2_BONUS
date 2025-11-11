@@ -1,14 +1,17 @@
 import db.DbCredentials;
 import db.DbManager;
+import Entities.*;
 import java.sql.*;
 
 
 /**
  * Testmethode, die Daten aus der MovieDB2 ausgibt.
- * @param dbManager
  */
-public static void testDBConnection(DbManager dbManager){
-    // Zum testen, ob Verbindung über JDBC zu PostgresDB funktioniert:
+public static void testDBConnection(){
+    DbCredentials credentials = new DbCredentials();
+    String url="jdbc:postgresql://localhost:5433/db01";
+    DbManager dbManager = new DbManager(credentials.getUsername(), credentials.getPassword(), url);
+    dbManager.connectToDB();
     String sqlTest = "SELECT ID, TITLE FROM MOVIEDB2.MOVIE WHERE ID BETWEEN 600000 AND 600100";
     Connection conn = dbManager.getConnection();
     try(Statement stmt = conn.createStatement()){
@@ -24,7 +27,6 @@ public static void testDBConnection(DbManager dbManager){
     } catch (SQLException e) {
         System.out.println("Fehler bei ResultSet rs = stmt.executeQuery(sqlTest):\n"+e);
     }
-    //====================================================================
 }
 
 
@@ -34,10 +36,10 @@ public static void testDBConnection(DbManager dbManager){
  * @throws SQLException
  */
 public static void main(String[] args) throws SQLException {
-    DbCredentials credentials = new DbCredentials();
-    String url="jdbc:postgresql://localhost:5433/db01";
-    DbManager dbManager = new DbManager(credentials.getUsername(), credentials.getPassword(), url);
-    dbManager.connectToDB();
-    testDBConnection(dbManager);
+
+//    testDBConnection();
+
+    Movie m = new Movie(1, "Professor Layton und die ewige Diva", 2009, "c");
+    m.insert();
 
 }

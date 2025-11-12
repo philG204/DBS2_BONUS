@@ -20,28 +20,22 @@ public class Movie implements DbActions {
         this.type = type;
     }
 
-    public long GetId(){
+    public long getId(){ return id;}
+
+    public String getTitle(){ return title; }
+    public void setTitle(String title){this.title = title; }
+
+    public int getYear(){ return year;}
+    public void setYear(int year){ this.year = year; }
+
+    public String getType(){ return type; }
+    public void setType(String type){ this.type = type; }
 
 
-        return id;
-    }
 //    public void SetId(long id){ this.id = id; }
 //    public String GetTitle(){
 //        return title;
 //    }
-    public void SetTitle(String title){
-        this.title = title;
-    }
-    public int GetYear(){
-        return year;
-    }
-    public void SetYear(int year){ this.year = year; }
-    public String GetType(){
-        return type;
-    }
-    public void SetType(String type){
-        this.type = type;
-    }
 
 
     public int insert() {

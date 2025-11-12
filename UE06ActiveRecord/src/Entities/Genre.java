@@ -20,11 +20,11 @@ public class Genre implements DbActions {
         return this.genreID;
     }
 
-    public String GetGenre() {
+    public String getGenre() {
         return genre;
     }
 
-    public void SetGenre(String genre) {
+    public void setGenre(String genre) {
         this.genre = genre;
     }
 
@@ -43,7 +43,7 @@ public class Genre implements DbActions {
                 sequence = rs.getLong("genreID");
             }
             stmt.setLong(1, sequence);
-            stmt.setString(2, genre);
+            stmt.setString( 2,genre);
             num = stmt.executeUpdate();
             System.out.println(num + " Zeile(n) geändert.");
             setGenreID(sequence);
@@ -76,8 +76,6 @@ public class Genre implements DbActions {
         }
         return num;
     }
-
-    @Override
     public int update() {
         PreparedStatement stmt = null;
         int num = 0;

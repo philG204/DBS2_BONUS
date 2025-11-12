@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import db.*;
+import db.DbCredentials;
 
 public class Genre implements DbActions {
     private String genre;

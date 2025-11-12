@@ -113,12 +113,45 @@ public class Movie implements DbActions {
     }
 
     public int update(){
+        String update_movie = "UPDATE Movie SET title=?, year=?, type=? WHERE movieID=?";
 
+        PreparedStatement stmt = null;
 
-        return 0;
+        int cnt = 0;
+
+        dbManager = new DbManager(dbCredentials.getUsername(), dbCredentials.getPassword(), dbCredentials.getUrl());
+        dbManager.connectToDB();
+
+        try {
+            stmt = dbManager.getConnection().prepareStatement(update_movie);
+            stmt.setString(2, title);
+            stmt.setInt(3, year);
+            stmt.setString(4, type);
+            stmt.setLong(1, id);
+            cnt = stmt.executeUpdate();
+        } catch(SQLException e) {
+            System.err.println("Fehler beim einfügen:\n" + e.getMessage());
+        }
+        return cnt;
     }
 
     public int delete(){
-        return 0;
+        String delete_movie = "DELETE Movie, movieCharacter, movieGenre FROM Movie INNER JOIN movieCharacter FROM Movie INNER JOIN movieGenre WHERE Movie.movieID=movieCharacter.movieID AND Movie.movieID=movieGenre.movieID AND Movie.movieID=?";
+
+        PreparedStatement stmt = null;
+
+        int cnt = 0;
+
+        dbManager = new DbManager(dbCredentials.getUsername(), dbCredentials.getPassword(), dbCredentials.getUrl());
+        dbManager.connectToDB();
+
+        try {
+            stmt = dbManager.getConnection().prepareStatement(delete_movie);
+            stmt.setLong(1, id);
+            cnt = stmt.executeUpdate();
+        } catch(SQLException e) {
+            System.err.println("Fehler beim einfügen:\n" + e.getMessage());
+        }
+        return cnt;
     }
 }

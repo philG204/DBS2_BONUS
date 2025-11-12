@@ -12,6 +12,7 @@ public class MovieGenre implements DbActions {
     public void SetGenreId(long genreId) { this.genreId = genreId; }
 
 
-    public void insert(){
+    public int insert(){
+        return 0;
     }
 }

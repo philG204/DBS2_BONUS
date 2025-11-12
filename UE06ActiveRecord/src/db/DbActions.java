@@ -1,6 +1,6 @@
 package db;
 
 public interface DbActions {
-    public void insert();
+    public int insert();
 
 }

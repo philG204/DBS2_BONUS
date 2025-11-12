@@ -37,9 +37,9 @@ public static void testDBConnection(){
  */
 public static void main(String[] args) throws SQLException {
 
-//    testDBConnection();
+    //testDBConnection();
 
-    Movie m = new Movie(1, "Professor Layton und die ewige Diva", 2009, "c");
-    m.insert();
+   Movie m = new Movie("Professor Layton und die ewige Diva", 2009, "c");
+   m.insert();
 
 }

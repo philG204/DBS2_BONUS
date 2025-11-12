@@ -21,6 +21,7 @@ public class MovieCharacter implements DbActions {
     public void SetAlias(String alias) { this.alias = alias; }
 
 
-    public void insert() {
+    public int insert() {
+        return 0;
     }
 }

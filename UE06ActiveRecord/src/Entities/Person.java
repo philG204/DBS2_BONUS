@@ -16,7 +16,8 @@ public class Person implements DbActions {
     }
 
     @Override
-    public void insert() {
+    public int insert() {
+        return 0;
     }
 
     public boolean update() {

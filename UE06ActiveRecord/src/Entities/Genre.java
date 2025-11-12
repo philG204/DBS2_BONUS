@@ -12,6 +12,7 @@ public class Genre implements DbActions{
         genre = name;
     }
 
-    public void insert(){
+    public int insert(){
+        return 0;
     }
 }

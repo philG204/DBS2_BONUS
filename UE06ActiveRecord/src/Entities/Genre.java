@@ -61,7 +61,6 @@ public class Genre implements DbActions {
         return num;
     }
 
-    @Override
     public int delete() {
         int num = 0;
         String query = "DELETE FROM Genre WHERE ID (?);";

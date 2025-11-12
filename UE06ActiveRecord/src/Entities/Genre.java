@@ -99,6 +99,6 @@ public class Genre implements DbActions {
         } catch (SQLException e) {
             System.out.println("Fehler beim Schließen des Statements: " + e.getMessage());
         }
-        return num;
+        return num;//
     }
 }

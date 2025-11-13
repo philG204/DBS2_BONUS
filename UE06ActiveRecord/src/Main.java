@@ -36,24 +36,16 @@ public static void testDBConnection(){
  */
 public static void main(String[] args) throws SQLException {
 
-//    testDBConnection();
+    //testDBConnection();
 //    Genre genre = new Genre();
 //    genre.setGenre("Horror");
 //    genre.insert();
 
-    Movie m2 = new Movie("M3GAN", 2023, "c");
-    m2.insert();
+    Movie m2 = new Movie("TEST", 2023, "c");
+    m2.delete("TEST");
 
-    Person p2 = new Person("Allison Williams");
-    p2.insert();
 
-    Genre g2 = new Genre("Horror");
-    g2.insert();
-
-    MovieCharacter mc2 = new MovieCharacter(m2.getMovieID(),p2.GetId(),"Gemma Forrester", 1, "");
-    mc2.insert();
-
-    MovieGenre mg2 = new MovieGenre(m2.getMovieID(), g2.getGenreID());
-    mg2.insert();
-
+    //Person p2 = new Person();
+    //p2.setName("Jenna Deavis");
+    //p2.insert();
 }

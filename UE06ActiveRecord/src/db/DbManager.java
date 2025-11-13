@@ -124,6 +124,39 @@ public class DbManager {
         return id;
     }
 
+    /**
+     * Führt SQL-Statment mit Zeilenrückgabe aus
+     * @param stmt
+     * @return ResultSet
+     */
+    public ResultSet executeSelect(PreparedStatement stmt){
+        ResultSet rs = null;
+
+        try {
+            rs = stmt.executeQuery();
+            return rs;
+        } catch (SQLException e) {
+            System.err.println("Fehler beim auslesen:\n"+e.getMessage());
+            throw new RuntimeException(e);
+
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    System.err.println("Fehler beim schlie0en:\n"+e.getMessage());
+                }
+            }
+
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (SQLException e) {
+                    System.err.println("Fehler beim schlie0en:\n"+e.getMessage());
+                }
+            }
+        }
+    }
 
     /**
      * Gibt Connection conn zurück.

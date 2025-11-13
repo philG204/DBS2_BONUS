@@ -31,7 +31,7 @@ public class Movie implements DbActions {
     public void setType(String type){ this.type = type; }
 
 
-//    public void SetId(long id){ this.id = id; }
+    public void SetId(long id){ this.movieID = id; }
 //    public String GetTitle(){
 //        return title;
 //    }

@@ -2,25 +2,39 @@ package Factories;
 
 import db.DbManager;
 import Entities.Movie;
-import db.DbCredentials;
 
 import java.sql.*;
 import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.concurrent.Executor;
 
 public class MovieFactory {
 
     private static DbManager conn;
 
-    public static Movie MovieFindById(long id){
-        String movieId_select = "SELECT ";
+    /**
+     * Looks for movie by ID given in the Parameters
+     * @param id
+     * @return Movie
+     * @throws SQLException
+     */
+    public static Movie MovieFindById(long id) throws SQLException{
+        String movieId_select = "SELECT title, year, type FROM Movie WHERE movieID = ?";
+        PreparedStatement stmt = null;
         ResultSet rs = null;
+        Movie movie = null;
 
+        String title = "";
+        int year = 0;
+        String type = "0";
+
+        conn = DbManager.getInstance();
         conn.connectToDB();
-        //PreparedStatement db = conn.getConnection();
-        return null;
+        stmt = conn.getConnection().prepareStatement(movieId_select);
+        stmt.setString(1, title);
+        stmt.setInt(2, year);
+        stmt.setString(3, type);
+        movie = new Movie(title, year, type);
+        movie.SetId(id);
+        return movie;
 
     }
 

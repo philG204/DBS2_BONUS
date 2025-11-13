@@ -5,12 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="372cfb12-3e9c-45a4-8526-26e039b41e61" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../.idea/DBS2_BONUS.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/postgresql_42_7_8.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UE06ActiveRecord.iml" beforeDir="false" afterPath="$PROJECT_DIR$/UE06ActiveRecord.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entities/Person.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entities/Person.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entities/Movie.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entities/Movie.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Factories/MovieFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Factories/MovieFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/db/DbManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/db/DbManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,6 +51,10 @@
 }]]></component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <envs>
+        <env name="DBS_USERNAME" value="704-E9B-U1" />
+        <env name="DBS_PASSWORD" value="testit2_" />
+      </envs>
       <option name="UNNAMED_CLASS_CONFIGURATION" value="true" />
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="UE06ActiveRecord" />

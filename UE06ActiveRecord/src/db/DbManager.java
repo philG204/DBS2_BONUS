@@ -43,9 +43,9 @@ public class DbManager {
      * Umgebungsvariablen
      * **/
     private DbManager() {
-        this.username = System.getenv("dbs2_ue6_username");
-        System.out.println("dbs2_ue6_username: " + this.username);
-        this.password = System.getenv("dbs2_ue6_password");
+        this.username = System.getenv("DBS_USERNAME");
+        System.out.println("DBS_USERNAME: " + this.username);
+        this.password = System.getenv("DBS_PASSWORD");
         this.url = "jdbc:postgresql://localhost:5433/db01";
     }
 

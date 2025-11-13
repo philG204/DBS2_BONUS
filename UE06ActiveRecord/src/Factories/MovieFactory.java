@@ -32,8 +32,8 @@ public class MovieFactory {
         stmt.setString(1, title);
         stmt.setInt(2, year);
         stmt.setString(3, type);
-        movie = new Movie(title, year, type);
-        movie.SetId(id);
+        //movie = new Movie(title, year, type);
+        //movie.SetId(id);
         return movie;
 
     }

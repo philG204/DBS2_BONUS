@@ -55,7 +55,3 @@ SELECT currval('seq_genre');
 CREATE SEQUENCE seq_person;
 SELECT nextval('seq_person');
 SELECT currval('seq_person');
-
-CREATE SEQUENCE seq_movieGenre;
-SELECT nextval('seq_movieGenre');
-SELECT currval('seq_movieGenre');

@@ -6,7 +6,7 @@ import java.sql.*;
 /**
  * Testmethode, die Daten aus der MovieDB2 ausgibt.
  */
-public static void testDBConnection(){
+public static void testDBConnection() throws SQLException {
     String url="jdbc:postgresql://localhost:5432/db01";
     //DbManager dbManager = new DbManager(credentials.getUsername(), credentials.getPassword(), credentials.getUrl());
     DbManager dbManager = DbManager.getInstance();
@@ -28,6 +28,47 @@ public static void testDBConnection(){
     }
 }
 
+public static void testInsert() throws SQLException {
+    boolean ok = false;
+    try {
+        Person person = new Person();
+        person.setName("Karl Tester");
+        person.insert();
+        System.out.println();
+
+        Movie movie = new Movie();
+        movie.setTitle("Die tolle Komoedie");
+        movie.setYear(2012);
+        movie.setType("C");
+        movie.insert();
+        System.out.println();
+
+        MovieCharacter chr = new MovieCharacter();
+        chr.setMovieId(movie.getMovieId());
+        chr.setPlayerId(person.getPersonId());
+        chr.setCharacter("Hauptrolle");
+        chr.setAlias(null);
+        chr.setPosition(1);
+        chr.insert();
+        System.out.println();
+
+        Genre genre = new Genre();
+        genre.setGenre("Unklar");
+        genre.insert();
+        System.out.println();
+
+        MovieGenre movieGenre = new MovieGenre();
+        movieGenre.setGenreId(genre.getGenreId());
+        movieGenre.setMovieId(movie.getMovieId());
+        movieGenre.insert();
+        System.out.println();
+
+        //DbManager.getConnection().commit();
+    } catch (Exception e) {
+        //DbManager.getConnection().rollback();
+        throw e;
+    }
+}
 
 /**
  * Main-Methode
@@ -36,24 +77,50 @@ public static void testDBConnection(){
  */
 public static void main(String[] args) throws SQLException {
 
+    DbManager dbManager = DbManager.getInstance();
+    dbManager.connectToDB();
+
 //    testDBConnection();
-//    Genre genre = new Genre();
-//    genre.setGenre("Horror");
-//    genre.insert();
 
-    Movie m2 = new Movie("M3GAN", 2023, "c");
-    m2.insert();
+    testInsert();
+    System.out.println();
 
-    Person p2 = new Person("Allison Williams");
-    p2.insert();
+    try{
+        Movie m2 = new Movie();
+        m2.setTitle("M3GAN");
+        m2.setYear(2023);
+        m2.setType("c");
+        m2.insert();
+        System.out.println();
 
-    Genre g2 = new Genre("Horror");
-    g2.insert();
+        Person p2 = new Person();
+        p2.setName("Allison Williams");
+        p2.insert();
+        System.out.println();
 
-    MovieCharacter mc2 = new MovieCharacter(m2.getMovieID(),p2.GetId(),"Gemma Forrester", 1, "");
-    mc2.insert();
+        Genre g2 = new Genre();
+        g2.setGenre("Horror");
+        g2.insert();
+        System.out.println();
 
-    MovieGenre mg2 = new MovieGenre(m2.getMovieID(), g2.getGenreID());
-    mg2.insert();
+        MovieCharacter mc2 = new MovieCharacter();
+        mc2.setMovieId(m2.getMovieId());
+        mc2.setPlayerId(p2.getPersonId());
+        mc2.setCharacter("Gemma Forrester");
+        mc2.setPosition(1);
+        mc2.setAlias("");
+        mc2.insert();
+        System.out.println();
 
+        MovieGenre mg2 = new MovieGenre();
+        mg2.setGenreId(g2.getGenreId());
+        mg2.setMovieId(m2.getMovieId());
+        mg2.insert();
+        System.out.println();
+
+        // DbManager.getConnection().commit();
+    } catch (Exception e) {
+        // DbManager.getConnection().rollback();
+        throw e;
+    }
 }

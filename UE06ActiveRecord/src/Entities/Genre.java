@@ -1,7 +1,6 @@
 package Entities;
 
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import db.*;
 
@@ -10,22 +9,13 @@ public class Genre implements DbActions {
     private long genreID;
     private DbManager dbManager;
 
-    public Genre(String genre) {
-        this.genre = genre;
-    }
-
-    public void setGenreID(long genreID) {
-        this.genreID = genreID;
-    }
-
-    public long getGenreID() {
+    public long getGenreId() {
         return this.genreID;
     }
 
     public String getGenre() {
         return genre;
     }
-
     public void setGenre(String genre) {
         this.genre = genre;
     }
@@ -36,13 +26,13 @@ public class Genre implements DbActions {
         String getSequence = "SELECT currval('seq_genre')";
         String insert_query = "INSERT INTO Genre VALUES (nextval('seq_genre'), ?);";
         dbManager = DbManager.getInstance();
-        dbManager.connectToDB();
+
         stmt = dbManager.getConnection().prepareStatement(insert_query);
         stmt.setString(1, genre);
         status = dbManager.executeInsert(stmt);
 
         stmt2 = dbManager.getConnection().prepareStatement(getSequence);
-        this.genreID = dbManager.executeInsert(stmt2);
+        this.genreID = dbManager.getID(stmt2);
 
         if(status == 0) {
             System.out.println("Eingefügt in Genre:\ngenreID: "+genreID+"\ngenre: "+genre);

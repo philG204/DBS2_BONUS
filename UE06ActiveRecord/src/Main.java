@@ -44,5 +44,6 @@ public static void main(String[] args) throws SQLException {
     Movie m2 = new Movie("M3GAN", 2023, "c");
     m2.insert();
 
-
+    Person p2 = new Person("Allison Williams");
+    p2.insert();
 }

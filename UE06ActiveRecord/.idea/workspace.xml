@@ -5,9 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="372cfb12-3e9c-45a4-8526-26e039b41e61" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../Blatt6/Aufgabe_1_a-Relationales_Datenmodell/Aufgabe 6 a.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../Blatt6/Aufgabe_1_a-Relationales_Datenmodell/Aufgabe 6 a.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entities/Genre.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entities/Genre.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entities/Movie.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entities/Movie.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Factories/MovieFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Factories/MovieFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entities/Person.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entities/Person.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/db/DbManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/db/DbManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -40,7 +43,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "Merging master",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/home/philipp/Dokumente/DBS2_BONUS/UE06ActiveRecord/src/postgresql-42.7.8.jar",
     "onboarding.tips.debug.path": "/home/philipp/IdeaProjects/UE06ActiveRecord/src/Main.java",

@@ -5,13 +5,17 @@ import java.sql.SQLException;
 import db.*;
 
 public class Person implements DbActions {
-    private long Id;
+    private long personID;
     private String name;
 
     private DbManager dbManager;
 
-    public long GetId() { return Id; }
-    public void SetId(long Id) { this.Id = Id; }
+    public Person(String name) {
+        this.name = name;
+    }
+
+    public long GetId() { return personID; }
+    public void SetId(long Id) { this.personID = Id; }
     public String GetName(){
         return name;
     }
@@ -20,21 +24,23 @@ public class Person implements DbActions {
     }
 
     @Override
-    public int insert() {
+    public int insert() throws SQLException {
         String insert_person = "INSERT INTO Person VALUES (nextval('seq_person'), ?);";
-        PreparedStatement stmt = null;
+        String id_select_query = "SELECT currval('seq_person');";
+        PreparedStatement stmt = null, stmt2 = null;
         int cnt = 0;
 
         dbManager =  DbManager.getInstance();
         dbManager.connectToDB();
 
-        try {
-            stmt = dbManager.getConnection().prepareStatement(insert_person);
-            stmt.setString(1, name);
-            cnt = stmt.executeUpdate();
-        } catch(SQLException e){
-            System.err.println("Fehler beim einfügen:\n"+e.getMessage());
-        }
-        return cnt;
+       stmt = dbManager.getConnection().prepareStatement(insert_person);
+       stmt.setString(1, name);
+       dbManager.executeInsert(stmt);
+
+       stmt2 = dbManager.getConnection().prepareStatement(id_select_query);
+       this.personID = dbManager.getID(stmt2);
+
+       System.out.println("Eingefügt in PERSON:\nPpersonID: " + this.personID + "\nname: "+this.name);
+       return cnt;
     }
 }

@@ -32,16 +32,10 @@ public class DbManager {
         return instance;
     }
 
-    /**
-     * Konstruktor für DbManager-Objekt.
-     * @param username
-     * @param password
-     * @param url
-     */
 
     /**
-     * Umgebungsvariablen
-     * **/
+     * Konstruktor eines S
+     */
     private DbManager() {
         this.username = System.getenv("DBS_USERNAME");
         System.out.println("DBS_USERNAME: " + this.username);

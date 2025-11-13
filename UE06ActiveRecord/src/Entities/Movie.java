@@ -50,7 +50,6 @@ public class Movie implements DbActions {
         dbManager =  DbManager.getInstance();
         dbManager.connectToDB();
 
-
         stmt = dbManager.getConnection().prepareStatement(insert_query);
         stmt.setString(1, title);
         stmt.setInt(2, year);

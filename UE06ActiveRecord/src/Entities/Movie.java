@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import db.*;
 
 public class Movie implements DbActions {
-    private long id;
+    private long movieID;
     private String title;
     private int year;
     private String type;
@@ -20,7 +20,7 @@ public class Movie implements DbActions {
         this.type = type;
     }
 
-    public long getId(){ return id;}
+    public long getMovieID(){ return movieID;}
 
     public String getTitle(){ return title; }
     public void setTitle(String title){this.title = title; }
@@ -38,9 +38,9 @@ public class Movie implements DbActions {
 //    }
 
 
-    public int insert() {
-        String insert_query = "INSERT INTO Movie VALUES ( nextval('seq_movie'), ?, ?, ? );",
-                id_select_query = "SELECT movieid FROM Movie WHERE title = ?;";
+    public int insert() throws SQLException{
+        String insert_query = "INSERT INTO Movie VALUES ( nextval('seq_movie'), ?, ?, ? );";
+        String id_select_query = "SELECT movieid FROM Movie WHERE title = ?;";
 
         int cnt=0;
 
@@ -50,65 +50,19 @@ public class Movie implements DbActions {
         dbManager = new DbManager(dbCredentials.getUsername(), dbCredentials.getPassword(), dbCredentials.getUrl());
         dbManager.connectToDB();
 
-        // Einfügen der Movie-Daten in DB:
-        try{
-            stmt = dbManager.getConnection().prepareStatement(insert_query);
-            //stmt.setLong(1, id);
-            stmt.setString(1, title);
-            stmt.setInt(2, year);
-            stmt.setString(3, type);
-            cnt= stmt.executeUpdate();
 
-            System.out.println(cnt+" Zeile hinzugefügt.");
+        stmt = dbManager.getConnection().prepareStatement(insert_query);
+        stmt.setString(1, title);
+        stmt.setInt(2, year);
+        stmt.setString(3, type);
+        dbManager.executeInsert(stmt);
 
-            // Holen der movieID:
-            try{
-                stmt2 = dbManager.getConnection().prepareStatement(id_select_query);
+        stmt2 = dbManager.getConnection().prepareStatement(id_select_query);
+        stmt2.setString(1, title);
+        this.movieID = dbManager.getID(stmt2);
 
-                stmt2.setString(1, title);
-                try{
-                    rs = stmt2.executeQuery();
-                    while(rs.next()){
-                        id = rs.getLong(1);
-                    }
-                    System.out.println("Film wurde in MOVIE eingefügt:\nmovieID: "+id+"\ntitle: "+title+"\nyear: "+year+"\ntype: "+type);
+        System.out.println("Eingefügt in MOVIE:\nid: "+ movieID +"\ntitle: "+title+"\nyear: "+year+"\ntype: "+type);
 
-                } catch(SQLException g){
-                    System.out.println("Fehler beim auslesen von Movie.movieID:\n"+g.getMessage());
-                }
-
-            } catch (Exception f) {
-                System.out.println("Fehler beim auslesen von Movie.title:\n"+f.getMessage());
-            }
-
-        } catch (SQLException e) {
-            System.err.println("Fehler beim einfügen:\n"+e.getMessage());
-        } finally {
-
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException e) {
-                    System.err.println("Fehler beim schlie0en:\n"+e.getMessage());
-                }
-            }
-
-            if (stmt != null) {
-                try {
-                    stmt.close();
-                } catch (SQLException e) {
-                    System.err.println("Fehler beim schlie0en:\n"+e.getMessage());
-                }
-            }
-
-            if (stmt2 != null) {
-                try {
-                    stmt2.close();
-                } catch (SQLException e) {
-                    System.err.println("Fehler beim schlie0en:\n"+e.getMessage());
-                }
-            }
-        }
         return cnt;
     }
 
@@ -127,7 +81,7 @@ public class Movie implements DbActions {
             stmt.setString(2, title);
             stmt.setInt(3, year);
             stmt.setString(4, type);
-            stmt.setLong(1, id);
+            stmt.setLong(1, movieID);
             cnt = stmt.executeUpdate();
         } catch(SQLException e) {
             System.err.println("Fehler beim einfügen:\n" + e.getMessage());
@@ -147,7 +101,7 @@ public class Movie implements DbActions {
 
         try {
             stmt = dbManager.getConnection().prepareStatement(delete_movie);
-            stmt.setLong(1, id);
+            stmt.setLong(1, movieID);
             cnt = stmt.executeUpdate();
         } catch(SQLException e) {
             System.err.println("Fehler beim einfügen:\n" + e.getMessage());

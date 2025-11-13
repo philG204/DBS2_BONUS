@@ -1,9 +1,10 @@
 package db;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -58,6 +59,65 @@ public class DbManager {
 //        }
 //        return instance;
 //    }
+
+    /**
+     * Fügt einen neuen Datensatz in eine Tabelle ein.
+     * @param stmt
+     */
+    public void executeInsert(PreparedStatement stmt){
+        try {
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Fehler beim auslesen von Movie.title:\n"+e.getMessage());
+        }
+
+        if(stmt!=null){
+            try {
+                stmt.close();
+            } catch (SQLException e) {
+                System.out.println("Fehler beim auslesen von Movie.title:\n"+e.getMessage());
+            }
+        }
+    }
+
+    /**
+     * Liest die ID eines hinzugefügten Datensatzes aus.
+     * @param stmt
+     * @return
+     * @throws SQLException
+     */
+    public long getID(PreparedStatement stmt) throws SQLException{
+        ResultSet rs = null;
+        System.out.println(stmt.toString());
+        long id=0;
+        try {
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                id = rs.getLong(1);
+            }
+        } catch (SQLException e) {
+            System.err.println("Fehler beim auslesen:\n"+e.getMessage());
+            throw new RuntimeException(e);
+
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    System.err.println("Fehler beim schlie0en:\n"+e.getMessage());
+                }
+            }
+
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (SQLException e) {
+                    System.err.println("Fehler beim schlie0en:\n"+e.getMessage());
+                }
+            }
+        }
+        return id;
+    }
 
 
     /**

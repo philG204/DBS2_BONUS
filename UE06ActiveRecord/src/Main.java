@@ -10,7 +10,7 @@ import java.sql.*;
 public static void testDBConnection(){
     DbCredentials credentials = new DbCredentials();
     String url="jdbc:postgresql://localhost:5432/db01";
-    DbManager dbManager = new DbManager(credentials.getUsername(), credentials.getPassword(), url);
+    DbManager dbManager = new DbManager(credentials.getUsername(), credentials.getPassword(), credentials.getUrl());
     dbManager.connectToDB();
     String sqlTest = "SELECT ID, TITLE FROM MOVIEDB2.MOVIE WHERE ID BETWEEN 600000 AND 600100";
     Connection conn = dbManager.getConnection();
@@ -37,12 +37,14 @@ public static void testDBConnection(){
  */
 public static void main(String[] args) throws SQLException {
 
-    testDBConnection();
-    Genre genre = new Genre();
-    genre.setGenre("Horror");
-    genre.insert();
+//    testDBConnection();
+//    Genre genre = new Genre();
+//    genre.setGenre("Horror");
+//    genre.insert();
 
-   //Movie m = new Movie("Professor Layton und die ewige Diva", 2009, "c");
-   //m.insert();
+    Movie m = new Movie("Professor Layton und die ewige Diva", 2009, "c");
+    m.insert();
+    Movie m2 = new Movie("M3GAN", 2023, "c");
+    m2.insert();
 
 }

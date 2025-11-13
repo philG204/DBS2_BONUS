@@ -1,10 +1,12 @@
 package Entities;
 
 import db.DbActions;
+import db.DbManager;
 
 public class MovieGenre implements DbActions {
     private long movieId;
     private long genreId;
+    private DbManager dbManager;
 
     public long GetMovieId() { return movieId; }
     public void SetMovieId(long movieId) { this.movieId = movieId; }
@@ -13,6 +15,7 @@ public class MovieGenre implements DbActions {
 
 
     public int insert(){
+
         return 0;
     }
 }

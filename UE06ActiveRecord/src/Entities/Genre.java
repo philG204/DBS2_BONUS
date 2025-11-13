@@ -4,13 +4,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import db.*;
-import db.DbCredentials;
 
 public class Genre implements DbActions {
     private String genre;
     private DbManager dbManager;
     private long genreID;
-    private DbCredentials dbCredentials = new DbCredentials();
 
     public void setGenreID(long genreID) {
         this.genreID = genreID;
@@ -28,13 +26,13 @@ public class Genre implements DbActions {
         this.genre = genre;
     }
 
-    public int insert() {
+    public int insert() throws SQLException {
         int num = 0;
         PreparedStatement stmt = null;
         String getSequence = "SELECT nextval('genreid')";
         String query = "INSERT INTO Genre VALUES ( ?, ? );";
         long sequence = 0;
-        dbManager = new DbManager(dbCredentials.getUsername(), dbCredentials.getPassword(), dbCredentials.getUrl());
+        dbManager =  DbManager.getInstance();
         dbManager.connectToDB();
         try {
             stmt = dbManager.getConnection().prepareStatement(getSequence);

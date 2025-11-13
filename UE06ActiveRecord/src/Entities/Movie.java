@@ -11,7 +11,6 @@ public class Movie implements DbActions {
     private int year;
     private String type;
 
-    private DbCredentials dbCredentials= new DbCredentials();
     private DbManager dbManager;
 
     public Movie (String title, int year, String type) {
@@ -40,14 +39,15 @@ public class Movie implements DbActions {
 
     public int insert() throws SQLException{
         String insert_query = "INSERT INTO Movie VALUES ( nextval('seq_movie'), ?, ?, ? );";
-        String id_select_query = "SELECT movieid FROM Movie WHERE title = ?;";
+        String id_select_query = "SELECT currval('seq_movie');";
 
         int cnt=0;
 
         PreparedStatement stmt = null, stmt2 = null;
         ResultSet rs = null;
 
-        dbManager = new DbManager(dbCredentials.getUsername(), dbCredentials.getPassword(), dbCredentials.getUrl());
+        //dbManager = new DbManager(dbCredentials.getUsername(), dbCredentials.getPassword(), dbCredentials.getUrl());
+        dbManager =  DbManager.getInstance();
         dbManager.connectToDB();
 
 
@@ -58,7 +58,7 @@ public class Movie implements DbActions {
         dbManager.executeInsert(stmt);
 
         stmt2 = dbManager.getConnection().prepareStatement(id_select_query);
-        stmt2.setString(1, title);
+        //stmt2.setString(1, title);
         this.movieID = dbManager.getID(stmt2);
 
         System.out.println("Eingefügt in MOVIE:\nid: "+ movieID +"\ntitle: "+title+"\nyear: "+year+"\ntype: "+type);
@@ -73,7 +73,7 @@ public class Movie implements DbActions {
 
         int cnt = 0;
 
-        dbManager = new DbManager(dbCredentials.getUsername(), dbCredentials.getPassword(), dbCredentials.getUrl());
+        dbManager =  DbManager.getInstance();
         dbManager.connectToDB();
 
         try {
@@ -96,7 +96,7 @@ public class Movie implements DbActions {
 
         int cnt = 0;
 
-        dbManager = new DbManager(dbCredentials.getUsername(), dbCredentials.getPassword(), dbCredentials.getUrl());
+        dbManager =  DbManager.getInstance();
         dbManager.connectToDB();
 
         try {

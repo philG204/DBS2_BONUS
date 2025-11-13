@@ -1,3 +1,5 @@
+DROP TABLE IF NOT EXISTS Movie, Genre, movieGenre, Person, movieCharacter;
+
 CREATE TABLE Movie(
 movieID INTEGER NOT NULL,
 title VARCHAR(250) NOT NULL,
@@ -38,4 +40,22 @@ FOREIGN KEY (personID) REFERENCES Person(personID),
 PRIMARY KEY (movCharID)
 );
 
-DROP TABLE Movie, Genre, movieGenre, Person, movieCharacter;
+CREATE SEQUENCE seq_movie;
+SELECT nextval('seq_movie');
+SELECT currval('seq_movie');
+
+CREATE SEQUENCE seq_movieCharacter;
+SELECT nextval('seq_movieCharacter');
+SELECT currval('seq_movieCharacter');
+
+CREATE SEQUENCE seq_genre;
+SELECT nextval('seq_genre');
+SELECT currval('seq_genre');
+
+CREATE SEQUENCE seq_pers;
+SELECT nextval('seq_pers');
+SELECT currval('seq_pers');
+
+CREATE SEQUENCE seq_movieGenre;
+SELECT nextval('seq_movieGenre');
+SELECT currval('seq_movieGenre');

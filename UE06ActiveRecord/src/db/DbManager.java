@@ -16,8 +16,21 @@ public class DbManager {
     private final String password;
 
     private static Connection conn;
-    private static DbManager instance;
+    static DbManager instance;
 
+
+    /**
+     * Gibt die Singleton-Instanz des {@code DbManager} zurück.
+     * Falls noch keine Instanz existiert, wird sie erstellt.
+     *
+     * @return die einzige Instanz des {@code DbManager}
+     */
+    public static DbManager getInstance() {
+        if (instance == null) {
+            instance = new DbManager();
+        }
+        return instance;
+    }
 
     /**
      * Konstruktor für DbManager-Objekt.
@@ -25,10 +38,15 @@ public class DbManager {
      * @param password
      * @param url
      */
-    public DbManager(String username, String password, String url) {
-            this.url = url;
-            this.username = username;
-            this.password = password;
+
+    /**
+     * Umgebungsvariablen
+     * **/
+    private DbManager() {
+        this.username = System.getenv("dbs2_ue6_username");
+        System.out.println("dbs2_ue6_username: " + this.username);
+        this.password = System.getenv("dbs2_ue6_password");
+        this.url = "jdbc:postgresql://localhost:5433/db01";
     }
 
 
@@ -46,19 +64,6 @@ public class DbManager {
         }
     }
 
-
-//    /**
-//     * Gibt die Singleton-Instanz des {@code DbManager} zurück.
-//     * Falls noch keine Instanz existiert, wird sie erstellt.
-//     *
-//     * @return die einzige Instanz des {@code DbManager}
-//     */
-//    public static synchronized DbManager getInstance() {
-//        if (instance == null) {
-//            instance = new DbManager();
-//        }
-//        return instance;
-//    }
 
     /**
      * Fügt einen neuen Datensatz in eine Tabelle ein.

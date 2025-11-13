@@ -8,7 +8,6 @@ public class Person implements DbActions {
     private long Id;
     private String name;
 
-    private DbCredentials dbCredentials= new DbCredentials();
     private DbManager dbManager;
 
     public long GetId() { return Id; }
@@ -26,7 +25,7 @@ public class Person implements DbActions {
         PreparedStatement stmt = null;
         int cnt = 0;
 
-        dbManager = new DbManager(dbCredentials.getUsername(), dbCredentials.getPassword(), dbCredentials.getUrl());
+        dbManager =  DbManager.getInstance();
         dbManager.connectToDB();
 
         try {

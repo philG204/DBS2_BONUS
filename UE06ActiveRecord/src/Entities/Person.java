@@ -1,10 +1,15 @@
 package Entities;
 
-import db.DbActions;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import db.*;
 
 public class Person implements DbActions {
     private long Id;
     private String name;
+
+    private DbCredentials dbCredentials= new DbCredentials();
+    private DbManager dbManager;
 
     public long GetId() { return Id; }
     public void SetId(long Id) { this.Id = Id; }
@@ -17,14 +22,20 @@ public class Person implements DbActions {
 
     @Override
     public int insert() {
-        return 0;
-    }
+        String insert_person = "INSERT INTO Person VALUES (nextval('seq_person'), ?);";
+        PreparedStatement stmt = null;
+        int cnt = 0;
 
-    public int update() {
-        return 0;
-    }
+        dbManager = new DbManager(dbCredentials.getUsername(), dbCredentials.getPassword(), dbCredentials.getUrl());
+        dbManager.connectToDB();
 
-    public int delete() {
-        return 0;
+        try {
+            stmt = dbManager.getConnection().prepareStatement(insert_person);
+            stmt.setString(1, name);
+            cnt = stmt.executeUpdate();
+        } catch(SQLException e){
+            System.err.println("Fehler beim einfügen:\n"+e.getMessage());
+        }
+        return cnt;
     }
 }

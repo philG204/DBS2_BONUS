@@ -60,42 +60,4 @@ public class Genre implements DbActions {
         }
         return num;
     }
-
-    public int delete() {
-        int num = 0;
-        String query = "DELETE FROM Genre WHERE ID (?);";
-        dbManager = new DbManager(dbCredentials.getUsername(), dbCredentials.getPassword(), dbCredentials.getUrl());
-        dbManager.connectToDB();
-        try (PreparedStatement stmt = dbManager.getConnection().prepareStatement(query)) {
-            stmt.setLong(1, genreID);
-            num = stmt.executeUpdate();
-            System.out.println(num + " Zeile(n) gelöscht.");
-
-        } catch (SQLException e) {
-            System.err.println("Fehler beim löschen:\n" + e.getMessage());
-        }
-        return num;
-    }
-    public int update() {
-        PreparedStatement stmt = null;
-        int num = 0;
-        String query = "UPDATE Genre SET Genre WHERE ID = ?";
-        try {
-            stmt = dbManager.getConnection().prepareStatement(query);
-            stmt.setLong(1, genreID);
-            stmt.setString(2, genre);
-            num = stmt.executeUpdate();
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        try {
-            if (stmt != null) {
-                stmt.close();
-            }
-        } catch (SQLException e) {
-            System.out.println("Fehler beim Schließen des Statements: " + e.getMessage());
-        }
-        return num;//
-    }
 }

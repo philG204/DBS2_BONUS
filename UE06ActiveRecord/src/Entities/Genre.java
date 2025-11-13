@@ -31,7 +31,7 @@ public class Genre implements DbActions {
     public int insert() {
         int num = 0;
         PreparedStatement stmt = null;
-        String getSequence = "SELECT genreID.nextval";
+        String getSequence = "SELECT nextval('genreid')";
         String query = "INSERT INTO Genre VALUES ( ?, ? );";
         long sequence = 0;
         dbManager = new DbManager(dbCredentials.getUsername(), dbCredentials.getPassword(), dbCredentials.getUrl());

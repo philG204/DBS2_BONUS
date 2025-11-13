@@ -9,7 +9,7 @@ import java.sql.*;
  */
 public static void testDBConnection(){
     DbCredentials credentials = new DbCredentials();
-    String url="jdbc:postgresql://localhost:5433/db01";
+    String url="jdbc:postgresql://localhost:5432/db01";
     DbManager dbManager = new DbManager(credentials.getUsername(), credentials.getPassword(), url);
     dbManager.connectToDB();
     String sqlTest = "SELECT ID, TITLE FROM MOVIEDB2.MOVIE WHERE ID BETWEEN 600000 AND 600100";
@@ -37,9 +37,12 @@ public static void testDBConnection(){
  */
 public static void main(String[] args) throws SQLException {
 
-    //testDBConnection();
+    testDBConnection();
+    Genre genre = new Genre();
+    genre.setGenre("Horror");
+    genre.insert();
 
-   Movie m = new Movie("Professor Layton und die ewige Diva", 2009, "c");
-   m.insert();
+   //Movie m = new Movie("Professor Layton und die ewige Diva", 2009, "c");
+   //m.insert();
 
 }

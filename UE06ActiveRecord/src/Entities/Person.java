@@ -20,11 +20,11 @@ public class Person implements DbActions {
         return 0;
     }
 
-    public boolean update() {
-        return false;
+    public int update() {
+        return 0;
     }
 
-    public boolean delete() {
-        return false;
+    public int delete() {
+        return 0;
     }
 }

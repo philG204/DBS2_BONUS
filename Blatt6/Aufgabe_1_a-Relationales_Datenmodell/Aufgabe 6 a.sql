@@ -1,4 +1,4 @@
-DROP TABLE IF NOT EXISTS Movie, Genre, movieGenre, Person, movieCharacter;
+DROP TABLE IF EXISTS Movie, Genre, movieGenre, Person, movieCharacter;
 
 CREATE TABLE Movie(
 movieID INTEGER NOT NULL,
@@ -19,7 +19,7 @@ genreID INTEGER NOT NULL,
 movieID INTEGER NOT NULL,
 FOREIGN KEY (genreID) REFERENCES Genre(genreID),
 FOREIGN KEY (movieID) REFERENCES Movie(movieID),
-PRIMARY KEY (movieID, genreID)
+PRIMARY KEY (genreID, movieID)
 );
 
 CREATE TABLE Person(

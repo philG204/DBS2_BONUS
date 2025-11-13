@@ -34,7 +34,7 @@ public class DbManager {
 
 
     /**
-     * Konstruktor eines S
+     * Konstruktor.
      */
     private DbManager() {
         this.username = System.getenv("DBS_USERNAME");
@@ -63,20 +63,24 @@ public class DbManager {
      * Fügt einen neuen Datensatz in eine Tabelle ein.
      * @param stmt
      */
-    public void executeInsert(PreparedStatement stmt){
+    public int executeInsert(PreparedStatement stmt){
+        int status = 0;
         try {
             stmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("Fehler beim auslesen von Movie.title:\n"+e.getMessage());
+            System.out.println("Fehler beim einfügen:\n"+e.getMessage());
+            status = 1;
         }
 
         if(stmt!=null){
             try {
                 stmt.close();
             } catch (SQLException e) {
-                System.out.println("Fehler beim auslesen von Movie.title:\n"+e.getMessage());
+                System.out.println("Fehler beim schließen:\n"+e.getMessage());
+                status = 1;
             }
         }
+        return status;
     }
 
     /**

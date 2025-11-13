@@ -4,13 +4,12 @@ import db.DbActions;
 import db.DbManager;
 
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class MovieCharacter implements DbActions {
     private long movieCharID;
-    private long movieId;
-    private long charId;
+    private long movieID;
+    private long charID;
     private String character;
     private int position;
     private String alias;
@@ -18,8 +17,8 @@ public class MovieCharacter implements DbActions {
     private DbManager dbManager;
 
     public MovieCharacter(long movieId, long charId, String character, int position, String alias) {
-        this.movieId = movieId;
-        this.charId = charId;
+        this.movieID = movieId;
+        this.charID = charId;
         this.character = character;
         this.position = position;
         this.alias = alias;
@@ -34,19 +33,19 @@ public class MovieCharacter implements DbActions {
     }
 
     public long setMovieId() {
-        return movieId;
+        return movieID;
     }
 
-    public void setMovieId(long movieId) {
-        this.movieId = movieId;
+    public void setMovieID(long movieID) {
+        this.movieID = movieID;
     }
 
-    public long getCharId() {
-        return charId;
+    public long getCharID() {
+        return charID;
     }
 
-    public void setCharId(long charId) {
-        this.charId = charId;
+    public void setCharID(long charID) {
+        this.charID = charID;
     }
 
     public String getName() {
@@ -76,16 +75,16 @@ public class MovieCharacter implements DbActions {
 
     public int insert() throws SQLException {
         int cnt = 0;
-        String insert_query = "INSERT INTO MovieCharacter VALUES(nextval('seq_movieCharacter'), ?, ?, ?, ?, ?);";
-        String id_select_query = "SELECT movieCharID FROM MovieCharacter WHERE movieID = ?;";
+        String insert_query = "INSERT INTO movieCharacter VALUES(nextval('seq_movieCharacter'), ?, ?, ?, ?, ?);";
+        String get_id_query = "SELECT currval('seq_movieCharacter');";
         PreparedStatement stmt = null, stmt2 = null;
         dbManager =  DbManager.getInstance();
         dbManager.connectToDB();
 
         // Einfügen der Movie-Daten in DB:
        stmt = dbManager.getConnection().prepareStatement(insert_query);
-       stmt.setLong(1, movieId);
-       stmt.setLong(2, charId);
+       stmt.setLong(1, movieID);
+       stmt.setLong(2, charID);
        stmt.setString(3, character);
        stmt.setInt(4, position);
        stmt.setString(5, alias);
@@ -93,10 +92,9 @@ public class MovieCharacter implements DbActions {
 
 
         // Holen der movieID:
-        stmt2 = dbManager.getConnection().prepareStatement(id_select_query);
-        stmt2.setLong(1, movieId);
+        stmt2 = dbManager.getConnection().prepareStatement(get_id_query);
         dbManager.getID(stmt2);
-        System.out.println("Eingefügt in MovieCharacter:\nid: " + movieCharID + "\nmovieID: " + movieId + "\ncharID: " + charId + "\ncharacter: " + character + "\nposition: " + position + "\nalias: " + alias);
+        System.out.println("Eingefügt in MovieCharacter:\nid: " + movieCharID + "\nmovieID: " + movieID + "\ncharID: " + charID + "\ncharacter: " + character + "\nposition: " + position + "\nalias: " + alias);
 
         return cnt;
     }

@@ -46,4 +46,14 @@ public static void main(String[] args) throws SQLException {
 
     Person p2 = new Person("Allison Williams");
     p2.insert();
+
+    Genre g2 = new Genre("Horror");
+    g2.insert();
+
+    MovieCharacter mc2 = new MovieCharacter(m2.getMovieID(),p2.GetId(),"Gemma Forrester", 1, "");
+    mc2.insert();
+
+    MovieGenre mg2 = new MovieGenre(m2.getMovieID(), g2.getGenreID());
+    mg2.insert();
+
 }

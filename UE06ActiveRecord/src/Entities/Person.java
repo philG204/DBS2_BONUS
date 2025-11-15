@@ -10,11 +10,16 @@ public class Person implements DbActions {
 
     private DbManager dbManager;
 
-    public long getPersonId() { return personID; }
-    public String getName(){
+    public Person(String name) {
+        this.name = name;
+    }
+
+    public long GetId() { return personID; }
+    public void SetId(long Id) { this.personID = Id; }
+    public String GetName(){
         return name;
     }
-    public void setName(String name){
+    public void SetName(String name){
         this.name = name;
     }
 
@@ -24,16 +29,18 @@ public class Person implements DbActions {
         String id_select_query = "SELECT currval('seq_person');";
         PreparedStatement stmt = null, stmt2 = null;
         int cnt = 0;
+
         dbManager =  DbManager.getInstance();
         dbManager.connectToDB();
-        stmt = dbManager.getConnection().prepareStatement(insert_person);
-        stmt.setString(1, name);
-        dbManager.executeInsert(stmt);
 
-        stmt2 = dbManager.getConnection().prepareStatement(id_select_query);
-        this.personID = dbManager.getID(stmt2);
+       stmt = dbManager.getConnection().prepareStatement(insert_person);
+       stmt.setString(1, name);
+       dbManager.executeInsert(stmt);
 
-        System.out.println("Eingefügt in Person:\nPpersonID: " + this.personID + "\nname: "+this.name);
-        return cnt;
+       stmt2 = dbManager.getConnection().prepareStatement(id_select_query);
+       this.personID = dbManager.getID(stmt2);
+
+       System.out.println("Eingefügt in PERSON:\nPpersonID: " + this.personID + "\nname: "+this.name);
+       return cnt;
     }
 }

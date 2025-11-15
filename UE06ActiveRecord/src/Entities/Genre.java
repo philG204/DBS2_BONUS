@@ -8,6 +8,11 @@ import db.*;
 public class Genre implements DbActions {
     private String genre;
     private long genreID;
+    private DbManager dbManager;
+
+    public Genre(String genre) {
+        this.genre = genre;
+    }
 
     public void setGenreID(long genreID) {
         this.genreID = genreID;
@@ -26,21 +31,30 @@ public class Genre implements DbActions {
     }
 
     public int insert() throws SQLException {
-        int num = 0;
-        int position1 = 1;
-        int position2 = 2;
-        PreparedStatement stmt = null;
-        String getSequence = "SELECT currval('genreid')";
-        String query = "INSERT INTO Genre VALUES (nextval('genreid'), ?);";
-        long sequence = 0;
-        DbManager dbManager = DbManager.getInstance();
+        int status = 0;
+        PreparedStatement stmt = null, stmt2 = null;
+        String getSequence = "SELECT currval('seq_genre')";
+        String insert_query = "INSERT INTO Genre VALUES (nextval('seq_genre'), ?);";
+        dbManager = DbManager.getInstance();
         dbManager.connectToDB();
-        stmt = dbManager.getConnection().prepareStatement(query);
-        sequence = dbManager.getID(stmt);
-        dbManager.getConnection().prepareStatement(getSequence);
-        stmt.setLong(position1,sequence);
-        stmt.setString(position2,getGenre());
-        dbManager.executeInsert(stmt);
-        return num;
+        stmt = dbManager.getConnection().prepareStatement(insert_query);
+        stmt.setString(1, genre);
+        status = dbManager.executeInsert(stmt);
+
+        stmt2 = dbManager.getConnection().prepareStatement(getSequence);
+        this.genreID = dbManager.executeInsert(stmt2);
+
+        if(status == 0) {
+            System.out.println("Eingefügt in Genre:\ngenreID: "+genreID+"\ngenre: "+genre);
+        }
+//        int position1 = 1;
+//        int position2 = 2;
+//        long sequence = 0;
+//        sequence = dbManager.getID(stmt);
+//        dbManager.getConnection().prepareStatement(getSequence);
+//        stmt.setLong(position1,sequence);
+//        stmt.setString(position2,getGenre());
+//        dbManager.executeInsert(stmt);
+        return status;
     }
 }

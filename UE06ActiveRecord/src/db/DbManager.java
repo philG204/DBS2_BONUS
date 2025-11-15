@@ -34,13 +34,13 @@ public class DbManager {
 
 
     /**
-     * Konstruktor eines S
+     * Konstruktor.
      */
     private DbManager() {
         this.username = System.getenv("DBS_USERNAME");
         System.out.println("DBS_USERNAME: " + this.username);
         this.password = System.getenv("DBS_PASSWORD");
-        this.url = "jdbc:postgresql://localhost:5432/db01";
+        this.url = "jdbc:postgresql://localhost:5433/db01";
     }
 
 
@@ -63,20 +63,24 @@ public class DbManager {
      * Fügt einen neuen Datensatz in eine Tabelle ein.
      * @param stmt
      */
-    public void executeInsert(PreparedStatement stmt){
+    public int executeInsert(PreparedStatement stmt){
+        int status = 0;
         try {
             stmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("Fehler beim auslesen von Movie.title:\n"+e.getMessage());
+            System.out.println("Fehler beim einfügen:\n"+e.getMessage());
+            status = 1;
         }
 
         if(stmt!=null){
             try {
                 stmt.close();
             } catch (SQLException e) {
-                System.out.println("Fehler beim auslesen von Movie.title:\n"+e.getMessage());
+                System.out.println("Fehler beim schließen:\n"+e.getMessage());
+                status = 1;
             }
         }
+        return status;
     }
 
     /**
@@ -118,6 +122,39 @@ public class DbManager {
         return id;
     }
 
+    /**
+     * Führt SQL-Statment mit Zeilenrückgabe aus
+     * @param stmt
+     * @return ResultSet
+     */
+    public ResultSet executeSelect(PreparedStatement stmt){
+        ResultSet rs = null;
+
+        try {
+            rs = stmt.executeQuery();
+            return rs;
+        } catch (SQLException e) {
+            System.err.println("Fehler beim auslesen:\n"+e.getMessage());
+            throw new RuntimeException(e);
+
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    System.err.println("Fehler beim schlie0en:\n"+e.getMessage());
+                }
+            }
+
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (SQLException e) {
+                    System.err.println("Fehler beim schlie0en:\n"+e.getMessage());
+                }
+            }
+        }
+    }
 
     /**
      * Gibt Connection conn zurück.

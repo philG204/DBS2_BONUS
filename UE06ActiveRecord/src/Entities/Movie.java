@@ -21,6 +21,7 @@ public class Movie implements DbActions {
 
     public long getMovieID(){ return movieID;}
 
+
     public String getTitle(){ return title; }
     public void setTitle(String title){this.title = title; }
 
@@ -31,7 +32,7 @@ public class Movie implements DbActions {
     public void setType(String type){ this.type = type; }
 
 
-//    public void SetId(long id){ this.id = id; }
+    public void SetId(long id){ this.movieID = id; }
 //    public String GetTitle(){
 //        return title;
 //    }
@@ -44,7 +45,6 @@ public class Movie implements DbActions {
         int cnt=0;
 
         PreparedStatement stmt = null, stmt2 = null;
-        //dbManager = new DbManager(dbCredentials.getUsername(), dbCredentials.getPassword(), dbCredentials.getUrl());
         dbManager =  DbManager.getInstance();
         dbManager.connectToDB();
 
@@ -55,9 +55,7 @@ public class Movie implements DbActions {
         dbManager.executeInsert(stmt);
 
         stmt2 = dbManager.getConnection().prepareStatement(id_select_query);
-        //stmt2.setString(1, title);
         this.movieID = dbManager.getID(stmt2);
-        System.out.println("Movie ID: " + this.movieID);
 
         System.out.println("Eingefügt in MOVIE:\nid: "+ movieID +"\ntitle: "+title+"\nyear: "+year+"\ntype: "+type);
 
@@ -87,19 +85,22 @@ public class Movie implements DbActions {
         return cnt;
     }
 
-    public int delete(String name){
-        String delete_movie = "DELETE FROM MOVIE WHERE title=?";
+    public int delete(){
+        String delete_movie = "DELETE Movie, movieCharacter, movieGenre FROM Movie INNER JOIN movieCharacter FROM Movie INNER JOIN movieGenre WHERE Movie.movieID=movieCharacter.movieID AND Movie.movieID=movieGenre.movieID AND Movie.movieID=?";
 
         PreparedStatement stmt = null;
+
         int cnt = 0;
+
         dbManager =  DbManager.getInstance();
         dbManager.connectToDB();
+
         try {
             stmt = dbManager.getConnection().prepareStatement(delete_movie);
-            stmt.setString(1, title);
+            stmt.setLong(1, movieID);
             cnt = stmt.executeUpdate();
         } catch(SQLException e) {
-            System.out.println("Fehler beim Löschen des Films:\n" + e.getMessage());
+            System.err.println("Fehler beim einfügen:\n" + e.getMessage());
         }
         return cnt;
     }

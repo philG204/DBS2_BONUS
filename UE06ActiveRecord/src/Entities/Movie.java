@@ -86,7 +86,8 @@ public class Movie implements DbActions {
     }
 
     public int delete(){
-        String delete_movie = "DELETE Movie, movieCharacter, movieGenre FROM Movie INNER JOIN movieCharacter FROM Movie INNER JOIN movieGenre WHERE Movie.movieID=movieCharacter.movieID AND Movie.movieID=movieGenre.movieID AND Movie.movieID=?";
+        String delete_movie = "DELETE FROM MOVIE WHERE title = ?";
+        //DELETE Movie, movieCharacter, movieGenre FROM Movie INNER JOIN movieCharacter FROM Movie INNER JOIN movieGenre WHERE Movie.movieID=movieCharacter.movieID AND Movie.movieID=movieGenre.movieID AND Movie.movieID=?
 
         PreparedStatement stmt = null;
 
@@ -97,7 +98,7 @@ public class Movie implements DbActions {
 
         try {
             stmt = dbManager.getConnection().prepareStatement(delete_movie);
-            stmt.setLong(1, movieID);
+            stmt.setString(1, title);
             cnt = stmt.executeUpdate();
         } catch(SQLException e) {
             System.err.println("Fehler beim einfügen:\n" + e.getMessage());

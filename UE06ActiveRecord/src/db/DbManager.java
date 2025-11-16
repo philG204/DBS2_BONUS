@@ -25,7 +25,7 @@ public class DbManager {
      *
      * @return die einzige Instanz des {@code DbManager}
      */
-    public static DbManager getInstance() throws SQLException {
+    public static DbManager getInstance() {
         if (instance == null) {
             instance = new DbManager();
         }
@@ -38,6 +38,7 @@ public class DbManager {
      */
     private DbManager() {
         this.username = System.getenv("DBS_USERNAME");
+        System.out.println("DBS_USERNAME: " + this.username);
         this.password = System.getenv("DBS_PASSWORD");
         this.url = "jdbc:postgresql://localhost:5433/db01";
     }
@@ -82,7 +83,6 @@ public class DbManager {
         return status;
     }
 
-
     /**
      * Liest die ID eines hinzugefügten Datensatzes aus.
      * @param stmt
@@ -91,6 +91,7 @@ public class DbManager {
      */
     public long getID(PreparedStatement stmt) throws SQLException{
         ResultSet rs = null;
+        System.out.println(stmt.toString());
         long id=0;
         try {
             rs = stmt.executeQuery();
@@ -120,7 +121,6 @@ public class DbManager {
         }
         return id;
     }
-
 
     /**
      * Führt SQL-Statment mit Zeilenrückgabe aus
@@ -156,12 +156,11 @@ public class DbManager {
         }
     }
 
-
     /**
      * Gibt Connection conn zurück.
      * @return
      */
-    public static Connection getConnection() {
+    public Connection getConnection() {
         return conn;
     }
 }

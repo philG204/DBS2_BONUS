@@ -39,7 +39,9 @@ public class DbManager {
     private DbManager() {
         this.username = System.getenv("DBS_USERNAME");
         this.password = System.getenv("DBS_PASSWORD");
-        this.url = "jdbc:postgresql://localhost:5432/db01";
+        this.url = System.getenv("DBS_URL");
+        //this.url = "jdbc:postgresql://localhost:5432/db01";   //Windows
+        //this.url = "jdbc:postgresql://localhost:5433/db01";   //Linux
     }
 
 

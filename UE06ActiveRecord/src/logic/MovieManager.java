@@ -1,7 +1,11 @@
 package logic;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import Entities.Movie;
+import Factories.MovieFactory;
+import logic.dto.CharacterDTO;
 import logic.dto.MovieDTO;
 
 public class MovieManager {
@@ -15,8 +19,27 @@ public class MovieManager {
 	 * @throws Exception Beschreibt evtl. aufgetretenen Fehler
 	 */
 	public List<MovieDTO> getMovieList(String search) throws Exception {
-		/* TODO */
-		return null;
+
+        if(search.isEmpty()){
+            search = "*";
+        }
+
+        // Holt eine (Array)List mit Movie-Objekten.
+        List<Movie> movieList =  MovieFactory.MovieFindByTitle(search);
+        MovieDTO movieDTO;
+        List<MovieDTO> movieDTOList = new ArrayList<>();
+
+        if(movieList.isEmpty()){
+            return null;
+        }
+
+        // Konvertiert Movie-Objekte in movieDTO-Objekte um.
+        for(Movie m : movieList){
+            movieDTO = createMovieDTO(m.getMovieId());
+            movieDTOList.add(movieDTO);
+        }
+
+		return movieDTOList;
 	}
 
 	/**
@@ -38,7 +61,7 @@ public class MovieManager {
 	 * @param movieId id des zu löschenden Films
 	 * @throws Exception Beschreibt evtl. aufgetretenen Fehler
 	 */
-	public void deleteMovie(int movieId) throws Exception {
+	public void deleteMovie(long movieId) throws Exception {
 		/* TODO */
 	}
 
@@ -49,9 +72,34 @@ public class MovieManager {
 	 * @return MovieDTO-Objekt mit allen Informationen zu dem Film
 	 * @throws Exception Z.B. bei Datenbank-Fehlern oder falls der Movie nicht existiert.
 	 */
-	public MovieDTO getMovie(int movieId) throws Exception {
-		/* TODO */
-		return null;
+	public MovieDTO getMovie(long movieId) throws Exception {
+        MovieDTO mdto =  createMovieDTO(movieId);
+        CharacterDTO cdto = new CharacterDTO();
+        mdto.addCharacter(cdto);
+
+
+        //TODO: Genres zu einem Film auslesen
+        //mdto.setGenres();
+
+        return mdto;
 	}
-	
+
+    /**
+     * Erstellt aus gegebener movieId ein MovieDTO-Objekt.
+     * @param movieId
+     * @return
+     * @throws Exception
+     */
+    private MovieDTO createMovieDTO(long movieId) throws Exception {
+        MovieDTO mdto = new MovieDTO();
+
+
+        Movie m = MovieFactory.MovieFindById(movieId);
+        mdto.setId((int)m.getMovieId());
+        mdto.setTitle(m.getTitle());
+        mdto.setYear(m.getYear());
+        mdto.setType(m.getType());
+
+        return mdto;
+    }
 }

@@ -41,6 +41,15 @@ public static void main(String[] args) throws SQLException {
 //    genre.setGenre("Horror");
 //    genre.insert();
 
+
+    // Bitte stehen lassen! Sonst ist keine Verbindung zur DB bzw. zur GUI möglich!
+    DbManager dbManager = DbManager.getInstance();
+    dbManager.connectToDB();
+    Starter starter = new Starter();
+    starter.run();
+    //=============================================================================
+
+
     Movie m2 = new Movie();
     m2.setTitle("Der Terminator");
     m2.setType("C");

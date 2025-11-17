@@ -28,89 +28,6 @@ public static void testDBConnection() throws SQLException {
     }
 }
 
-public static void testInsert() throws SQLException {
-    boolean ok = false;
-    try {
-        Person person = new Person();
-        person.setName("Karl Tester");
-        person.insert();
-        System.out.println();
-
-        Movie movie = new Movie();
-        movie.setTitle("Die tolle Komoedie");
-        movie.setYear(2012);
-        movie.setType("C");
-        movie.insert();
-        System.out.println();
-
-        MovieCharacter chr = new MovieCharacter();
-        chr.setMovieId(movie.getMovieId());
-        chr.setPlayerId(person.getPersonId());
-        chr.setCharacter("Hauptrolle");
-        chr.setAlias(null);
-        chr.setPosition(1);
-        chr.insert();
-        System.out.println();
-
-        Genre genre = new Genre();
-        genre.setGenre("Unklar");
-        genre.insert();
-        System.out.println();
-
-        MovieGenre movieGenre = new MovieGenre();
-        movieGenre.setGenreId(genre.getGenreId());
-        movieGenre.setMovieId(movie.getMovieId());
-        movieGenre.insert();
-        System.out.println();
-
-        //DbManager.getConnection().commit();
-    } catch (Exception e) {
-        //DbManager.getConnection().rollback();
-        throw e;
-    }
-}
-
-public static void testInsert2() throws SQLException {
-    try{
-        Movie m2 = new Movie();
-        m2.setTitle("M3GAN");
-        m2.setYear(2023);
-        m2.setType("c");
-        m2.insert();
-        System.out.println();
-
-        Person p2 = new Person();
-        p2.setName("Allison Williams");
-        p2.insert();
-        System.out.println();
-
-        Genre g2 = new Genre();
-        g2.setGenre("Horror");
-        g2.insert();
-        System.out.println();
-
-        MovieCharacter mc2 = new MovieCharacter();
-        mc2.setMovieId(m2.getMovieId());
-        mc2.setPlayerId(p2.getPersonId());
-        mc2.setCharacter("Gemma Forrester");
-        mc2.setPosition(1);
-        mc2.setAlias("");
-        mc2.insert();
-        System.out.println();
-
-        MovieGenre mg2 = new MovieGenre();
-        mg2.setGenreId(g2.getGenreId());
-        mg2.setMovieId(m2.getMovieId());
-        mg2.insert();
-        System.out.println();
-
-        // DbManager.getConnection().commit();
-    } catch (Exception e) {
-        // DbManager.getConnection().rollback();
-        throw e;
-    }
-}
-
 
 /**
  * Main-Methode
@@ -119,16 +36,26 @@ public static void testInsert2() throws SQLException {
  */
 public static void main(String[] args) throws SQLException {
 
-//    DbManager dbManager = DbManager.getInstance();
-//    dbManager.connectToDB();
-
 //    testDBConnection();
+//    Genre genre = new Genre();
+//    genre.setGenre("Horror");
+//    genre.insert();
 
-//    testInsert();
-//    System.out.println();
-//    testInsert2();
+    Movie m2 = new Movie();
+    m2.setTitle("Der Terminator");
+    m2.setType("C");
+    m2.setYear(1984);
+    m2.insert();
 
-Starter starter = new Starter();
-    starter.run();
+    Person p2 = new Person();
+    p2.setName("Arnold Schwarzenegger");
+
+    p2.insert();
+
+    Genre g2 = new Genre();
+    g2.setGenre("Horror");
+    g2.insert();
+    Genre g3 = new Genre();
+    g3.setGenre("Science Fiction");
 
 }

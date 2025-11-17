@@ -1,6 +1,7 @@
 package Entities;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import db.*;
 
@@ -35,5 +36,32 @@ public class Person implements DbActions {
 
         System.out.println("Eingefügt in Person:\nPpersonID: " + this.personID + "\nname: "+this.name);
         return cnt;
+    }
+    /*
+    liefert die ID als ResultSet zurück
+    akzeptiert einen Namen als Eingabe
+    wirft keine eigene SQLException ruft aber Methoden auf, welche Exceptions werfen
+     */
+    public ResultSet getIdAsResultSet(String name) throws SQLException {
+
+        PreparedStatement stmt = DbManager.getConnection().prepareStatement("SELECT ID FROM Person WHERE name = ?");
+        stmt.setString(1, name);
+        ResultSet rs = DbManager.getInstance().executeSelect(stmt);
+        return rs;
+    }
+    /*
+    gibt mehrere Namen in einem ResultSet zurück akzeptiert einen Namen
+     */
+    public ResultSet getNameListAsResultSet (String name) throws SQLException {
+        PreparedStatement stmt = DbManager.getConnection().prepareStatement("SELECT name FROM Person WHERE name = LIKE %?%");
+        stmt.setString(1, name);
+        ResultSet rs = DbManager.getInstance().executeSelect(stmt);
+        return rs;
+    }
+    public ResultSet getNameAsResultSet(String name) throws SQLException {
+        PreparedStatement stmt = DbManager.getConnection().prepareStatement("SELECT name FROM Person WHERE name = ?");
+        stmt.setString(1, name);
+        ResultSet rs = DbManager.getInstance().executeSelect(stmt);
+        return rs;
     }
 }

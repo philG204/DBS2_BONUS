@@ -1,5 +1,9 @@
 package logic;
 
+import Entities.Person;
+
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PersonManager {
@@ -11,8 +15,16 @@ public class PersonManager {
 	 * @throws Exception Beschreibt evtl. aufgetretenen Fehler
 	 */
 	public List<String> getPersonList(String name) throws Exception {
-		/* TODO */
-		return null;
+		List <String> list = new ArrayList<String>();
+        Person person = new Person();
+        ResultSet rs = person.getNameListAsResultSet(name);
+        if(!rs.next()) {
+            return null;
+        }
+        while (rs.next()) {
+            list.add(rs.getString(1));
+        }
+		return list;
 	}
 
 	/**
@@ -23,7 +35,26 @@ public class PersonManager {
 	 * @throws Exception Beschreibt evtl. aufgetretenen Fehler
 	 */
 	public int getPerson(String name) throws Exception {
-		/* TODO */
-		return -1;
+        Person p = new Person();
+        ResultSet rs = p.getIdAsResultSet(name);
+        int IdFromPerson = 0;
+        if(!rs.next()) {
+            return -1;
+        }
+        while(rs.next()) {
+            IdFromPerson = rs.getInt(1);
+        }
+		return IdFromPerson;
 	}
+    //eigene Methode hat nichts mit der Abgabe zu tun
+    public void getNameFromPerson(String name) throws Exception {
+        Person p = new Person();
+        ResultSet rs = p.getNameAsResultSet(name);
+        if(!rs.next()) {
+            return;
+        }
+        while(rs.next()) {
+            System.out.println(rs.getString(1));
+        }
+    }
 }

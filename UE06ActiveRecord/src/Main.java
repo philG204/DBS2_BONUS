@@ -35,8 +35,7 @@ public static void testDBConnection() throws SQLException {
  * @throws SQLException
  */
 public static void main(String[] args) throws SQLException {
-
-//    testDBConnection();
+    //testDBConnection();
 //    Genre genre = new Genre();
 //    genre.setGenre("Horror");
 //    genre.insert();
@@ -50,21 +49,28 @@ public static void main(String[] args) throws SQLException {
     //=============================================================================
 
 
-    Movie m2 = new Movie();
-    m2.setTitle("Der Terminator");
-    m2.setType("C");
-    m2.setYear(1984);
-    m2.insert();
+    Movie m3gan = new Movie();
+    m3gan.setTitle("Der Terminator");
+    m3gan.setType("C");
+    m3gan.setYear(1998);
+    m3gan.insert();
 
-    Person p2 = new Person();
-    p2.setName("Arnold Schwarzenegger");
 
-    p2.insert();
+    Person Allison_Williams = new Person();
+    Allison_Williams.setName("Arnold Schwarzenegger");
+    Allison_Williams.insert();
+    Person Violet_McGraw = new Person();
+    Violet_McGraw.setName("Violet McGraw");
+    Violet_McGraw.insert();
 
-    Genre g2 = new Genre();
-    g2.setGenre("Horror");
-    g2.insert();
-    Genre g3 = new Genre();
-    g3.setGenre("Science Fiction");
+    Genre scienceFiction = new Genre();
+    scienceFiction.setGenre("Scinece Fiction");
+    scienceFiction.insert();
+    MovieGenre mv = new MovieGenre();
+    //mv.insert("Der Terminator","Science Fiction");
+    
+
+
+
 
 }

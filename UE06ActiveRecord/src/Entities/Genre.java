@@ -4,7 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import db.*;
 
-public class Genre implements DbActions {
+public class Genre {
     private String genre;
     private long genreID;
     private DbManager dbManager;
@@ -26,7 +26,7 @@ public class Genre implements DbActions {
         String getSequence = "SELECT currval('seq_genre')";
         String insert_query = "INSERT INTO Genre VALUES (nextval('seq_genre'), ?);";
         dbManager = DbManager.getInstance();
-
+        dbManager.connectToDB();
         stmt = dbManager.getConnection().prepareStatement(insert_query);
         stmt.setString(1, genre);
         status = dbManager.executeInsert(stmt);

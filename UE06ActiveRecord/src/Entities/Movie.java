@@ -24,8 +24,7 @@ public class Movie implements DbActions {
     public void setType(String type){ this.type = type; }
 
 
-    //public void SetId(long id){ this.movieID = id; }
-
+    public void SetId(long id){ this.movieID = id; }
 
     public int insert() throws SQLException{
         String insert_query = "INSERT INTO Movie VALUES ( nextval('seq_movie'), ?, ?, ? );";
@@ -74,8 +73,7 @@ public class Movie implements DbActions {
     }
 
     public int delete() throws SQLException {
-        String delete_movie = "DELETE Movie, movieCharacter, movieGenre FROM Movie INNER JOIN movieCharacter FROM Movie INNER JOIN movieGenre WHERE Movie.movieID=movieCharacter.movieID AND Movie.movieID=movieGenre.movieID AND Movie.movieID=?";
-
+        String delete_movie = "DELETE FROM Movie WHERE title = ?";
         PreparedStatement stmt = null;
 
         int cnt = 0;

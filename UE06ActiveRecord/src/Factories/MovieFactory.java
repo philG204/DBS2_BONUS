@@ -22,23 +22,51 @@ public class MovieFactory {
         ResultSet rs = null;
         Movie movie = null;
 
-        String title = "";
-        int year = 0;
-        String type = "0";
-
         conn = DbManager.getInstance();
         conn.connectToDB();
+
         stmt = conn.getConnection().prepareStatement(movieId_select);
-        stmt.setString(1, title);
-        stmt.setInt(2, year);
-        stmt.setString(3, type);
-        //movie = new Movie(title, year, type);
-        //movie.SetId(id);
+        stmt.setLong(1, id);
+        rs = conn.executeSelect(stmt);
+
+        while(rs.next()){
+            movie = new Movie();
+            movie.SetId(rs.getLong(0));
+            movie.setTitle(rs.getString(1));
+            movie.setYear(rs.getInt(2));
+            movie.setType(rs.getString(3));
+        }
         return movie;
 
     }
 
-    public static List<Movie> MovieFindByTitle(String title){
-        return null;
+    /**
+     * Looks for movies by Title given in the Parameters
+     * @param title
+     * @return
+     * @throws SQLException
+     */
+    public static List<Movie> MovieFindByTitle(String title) throws SQLException{
+        String movieId_select = "SELECT movieID, year, type FROM Movie WHERE title = ?";
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        List<Movie> movies = null;
+
+        conn = DbManager.getInstance();
+        conn.connectToDB();
+
+        stmt = conn.getConnection().prepareStatement(movieId_select);
+        stmt.setString(1, title);
+        rs = conn.executeSelect(stmt);
+
+        while(rs.next()){
+            Movie movie = new Movie();
+            movie.SetId(rs.getLong(0));
+            movie.setTitle(rs.getString(1));
+            movie.setYear(rs.getInt(2));
+            movie.setType(rs.getString(3));
+            movies.add(movie);
+        }
+        return movies;
     }
 }

@@ -5,6 +5,7 @@ import Entities.Person;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class PersonManager {
 
@@ -15,16 +16,17 @@ public class PersonManager {
 	 * @throws Exception Beschreibt evtl. aufgetretenen Fehler
 	 */
 	public List<String> getPersonList(String name) throws Exception {
-		List <String> list = new ArrayList<String>();
-        Person person = new Person();
-        ResultSet rs = person.getNameListAsResultSet(name);
-        if(!rs.next()) {
-            return null;
+		List <String> persons = new ArrayList<String>();
+        List<Map<String, Object>> allPersons = Person.getPersons(name);
+        //if(allPersons != null) {
+        //    return null;
+        //}
+        for (Map<String, Object> row : allPersons) {
+            System.out.println("ID = " + row.get("id"));
+            System.out.println("Name = " + row.get("genre"));
+            persons.add((String) row.get("name"));
         }
-        while (rs.next()) {
-            list.add(rs.getString(1));
-        }
-		return list;
+		return persons;
 	}
 
 	/**
@@ -35,16 +37,14 @@ public class PersonManager {
 	 * @throws Exception Beschreibt evtl. aufgetretenen Fehler
 	 */
 	public int getPerson(String name) throws Exception {
-        Person p = new Person();
-        ResultSet rs = p.getIdAsResultSet(name);
-        int IdFromPerson = 0;
-        if(!rs.next()) {
-            return -1;
+        List<Map<String, Object>> person = Person.getPerson(name);
+
+        if(person == null) {
+            Exception Exception = new Exception();
+            throw Exception;
         }
-        while(rs.next()) {
-            IdFromPerson = rs.getInt(1);
-        }
-		return IdFromPerson;
+        Map<String, Object> id = person.get(0);
+		return Integer.parseInt(id.get("personid").toString());
 	}
     //eigene Methode hat nichts mit der Abgabe zu tun
     public void getNameFromPerson(String name) throws Exception {

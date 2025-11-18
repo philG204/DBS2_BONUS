@@ -1,8 +1,7 @@
 package db;
 
 import java.sql.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -129,25 +128,27 @@ public class DbManager {
      * @param stmt
      * @return ResultSet
      */
-    public ResultSet executeSelect(PreparedStatement stmt){
-        ResultSet rs = null;
+    public List<Map<String, Object>> executeSelect(PreparedStatement stmt){
+        List<Map<String, Object>> rows = new ArrayList<>();
 
         try {
-            rs = stmt.executeQuery();
-            return rs;
+            ResultSet rs = stmt.executeQuery();
+            ResultSetMetaData meta = rs.getMetaData();
+            int columnCount = meta.getColumnCount();
+
+            while (rs.next()) {
+                Map<String, Object> row = new HashMap<>();
+                for (int i = 1; i <= columnCount; i++) {
+                    row.put(meta.getColumnLabel(i), rs.getObject(i));
+                }
+                rows.add(row);
+            }
+            return rows;
         } catch (SQLException e) {
             System.err.println("Fehler beim auslesen:\n"+e.getMessage());
             throw new RuntimeException(e);
 
         } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException e) {
-                    System.err.println("Fehler beim schlie0en:\n"+e.getMessage());
-                }
-            }
-
             if (stmt != null) {
                 try {
                     stmt.close();

@@ -5,6 +5,7 @@ import Entities.Movie;
 
 import java.sql.*;
 import java.util.List;
+import java.util.Map;
 
 public class MovieFactory {
 
@@ -19,7 +20,7 @@ public class MovieFactory {
     public static Movie MovieFindById(long id) throws SQLException{
         String movieId_select = "SELECT title, year, type FROM Movie WHERE movieID = ?";
         PreparedStatement stmt = null;
-        ResultSet rs = null;
+        List<Map<String, Object>> rs = null;
         Movie movie = null;
 
         conn = DbManager.getInstance();
@@ -29,12 +30,11 @@ public class MovieFactory {
         stmt.setLong(1, id);
         rs = conn.executeSelect(stmt);
 
-        while(rs.next()){
-            movie = new Movie();
-            movie.SetId(rs.getLong(0));
-            movie.setTitle(rs.getString(1));
-            movie.setYear(rs.getInt(2));
-            movie.setType(rs.getString(3));
+        for (Map<String, Object> row : rs) {
+            movie.SetId(Long.parseLong((String)row.get("movieID")));
+            movie.setTitle((String) row.get("title"));
+            movie.setYear(Integer.parseInt((String)row.get("year")));
+            movie.setType((String)row.get("type"));
         }
         return movie;
 
@@ -49,7 +49,7 @@ public class MovieFactory {
     public static List<Movie> MovieFindByTitle(String title) throws SQLException{
         String movieId_select = "SELECT movieID, year, type FROM Movie WHERE title = ?";
         PreparedStatement stmt = null;
-        ResultSet rs = null;
+        List<Map<String, Object>> rs = null;
         List<Movie> movies = null;
 
         conn = DbManager.getInstance();
@@ -59,12 +59,12 @@ public class MovieFactory {
         stmt.setString(1, title);
         rs = conn.executeSelect(stmt);
 
-        while(rs.next()){
+        for (Map<String, Object> row : rs) {
             Movie movie = new Movie();
-            movie.SetId(rs.getLong(0));
-            movie.setTitle(rs.getString(1));
-            movie.setYear(rs.getInt(2));
-            movie.setType(rs.getString(3));
+            movie.SetId(Long.parseLong((String)row.get("movieID")));
+            movie.setTitle((String) row.get("title"));
+            movie.setYear(Integer.parseInt((String)row.get("year")));
+            movie.setType((String)row.get("type"));
             movies.add(movie);
         }
         return movies;

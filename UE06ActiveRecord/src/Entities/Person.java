@@ -3,6 +3,9 @@ package Entities;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
+
 import db.*;
 
 public class Person implements DbActions {
@@ -46,8 +49,8 @@ public class Person implements DbActions {
 
         PreparedStatement stmt = DbManager.getConnection().prepareStatement("SELECT ID FROM Person WHERE name = ?");
         stmt.setString(1, name);
-        ResultSet rs = DbManager.getInstance().executeSelect(stmt);
-        return rs;
+        //ResultSet rs = DbManager.getInstance().executeSelect(stmt);
+        return null;
     }
     /*
     gibt mehrere Namen in einem ResultSet zurück akzeptiert einen Namen
@@ -55,13 +58,27 @@ public class Person implements DbActions {
     public ResultSet getNameListAsResultSet (String name) throws SQLException {
         PreparedStatement stmt = DbManager.getConnection().prepareStatement("SELECT name FROM Person WHERE name = LIKE %?%");
         stmt.setString(1, name);
-        ResultSet rs = DbManager.getInstance().executeSelect(stmt);
-        return rs;
+        //ResultSet rs = DbManager.getInstance().executeSelect(stmt);
+        return null;
     }
     public ResultSet getNameAsResultSet(String name) throws SQLException {
         PreparedStatement stmt = DbManager.getConnection().prepareStatement("SELECT name FROM Person WHERE name = ?");
         stmt.setString(1, name);
-        ResultSet rs = DbManager.getInstance().executeSelect(stmt);
+        //ResultSet rs = DbManager.getInstance().executeSelect(stmt);
+        return null;
+    }
+
+    public static List<Map<String, Object>> getPersons(String name) throws SQLException {
+        PreparedStatement stmt = DbManager.getConnection().prepareStatement("SELECT name FROM Person WHERE name LIKE ?");
+        stmt.setString(1, "%" + name + "%");
+        List<Map<String, Object>> rs = DbManager.getInstance().executeSelect(stmt);
+        return rs;
+    }
+
+    public static List<Map<String, Object>> getPerson(String name) throws SQLException {
+        PreparedStatement stmt = DbManager.getConnection().prepareStatement("SELECT * FROM Person WHERE name = ?");
+        stmt.setString(1, name);
+        List<Map<String, Object>> rs = DbManager.getInstance().executeSelect(stmt);
         return rs;
     }
 }

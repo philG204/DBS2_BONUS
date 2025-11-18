@@ -68,7 +68,9 @@ public static void main(String[] args) throws SQLException {
     scienceFiction.insert();
     MovieGenre mv = new MovieGenre();
     //mv.insert("Der Terminator","Science Fiction");
-    
+    /*
+    Hier steht Text
+     */
 
 
 

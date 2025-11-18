@@ -34,7 +34,7 @@ public static void testDBConnection() throws SQLException {
  * @param args
  * @throws SQLException
  */
-public static void main(String[] args) throws SQLException {
+public static void main(String[] args) throws Exception {
     //testDBConnection();
 //    Genre genre = new Genre();
 //    genre.setGenre("Horror");
@@ -48,31 +48,26 @@ public static void main(String[] args) throws SQLException {
     starter.run();
     //=============================================================================
 
-
-    Movie m3gan = new Movie();
-    m3gan.setTitle("Der Terminator");
+ Movie m3gan = new Movie();
+    m3gan.setTitle("M3GAN");
     m3gan.setType("C");
-    m3gan.setYear(1998);
-    m3gan.insert();
+    m3gan.setYear(2022);
+    //m3gan.insert();
 
 
     Person Allison_Williams = new Person();
-    Allison_Williams.setName("Arnold Schwarzenegger");
-    Allison_Williams.insert();
+    Allison_Williams.setName("Allison Williams");
+    //Allison_Williams.insert();
     Person Violet_McGraw = new Person();
     Violet_McGraw.setName("Violet McGraw");
-    Violet_McGraw.insert();
+    //Violet_McGraw.insert();
 
-    Genre scienceFiction = new Genre();
-    scienceFiction.setGenre("Scinece Fiction");
-    scienceFiction.insert();
+    Genre horror = new Genre();
+    horror.setGenre("Horror");
+    //horror.insert();
     MovieGenre mv = new MovieGenre();
-    //mv.insert("Der Terminator","Science Fiction");
-    /*
-    Hier steht Text
-     */
-
-
-
+    mv.insert("M3GAN", "Horror");
+    MovieCharacter movChar = new MovieCharacter();
+    movChar.insert("M3GAN","Allison Williams","Gemma Forrester",1,"Gem");
 
 }

@@ -140,20 +140,12 @@ public class DbManager {
             throw new RuntimeException(e);
 
         } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException e) {
-                    System.err.println("Fehler beim schlie0en:\n"+e.getMessage());
-                }
-            }
-
             if (stmt != null) {
-                try {
-                    stmt.close();
-                } catch (SQLException e) {
-                    System.err.println("Fehler beim schlie0en:\n"+e.getMessage());
-                }
+               // try {
+                   // stmt.close();
+               // } catch (SQLException e) {
+                 //   System.err.println("Fehler beim schlie0en:\n"+e.getMessage());
+                //}
             }
         }
     }

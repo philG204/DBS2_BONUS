@@ -26,7 +26,7 @@ public class DBConnection {
 //			String username = props.getProperty("db.username");
 //			String password = props.getProperty("db.password");
 
-            String uri = "jdbc:postgresql://localhost:5433/db01";
+            String uri = "jdbc:postgresql://localhost:5432/db01";
             String username = System.getenv("DBS_USERNAME");
             String password = System.getenv("DBS_PASSWORD");
 

@@ -55,7 +55,7 @@ public class MovieCharacter{
 
 // Verknüft die FilmID mit der PersonID und dem Character, sowie der positon und alias zusammen
 
-    public int insert(String movieTitle, String personName) throws SQLException {
+    public int insert(String movieTitle, String personName, String character, int position, String alias) throws SQLException {
         int cnt = 0;
         String getMovieID = "SELECT movieID FROM movie WHERE title = ? ";
         String getPersonID = "SELECT personID FROM person WHERE name = ?";

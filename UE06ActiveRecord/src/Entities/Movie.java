@@ -4,7 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import db.*;
 
-public class Movie implements DbActions {
+public class Movie {
     private long movieID;
     private String title;
     private int year;
@@ -35,7 +35,7 @@ public class Movie implements DbActions {
 
         PreparedStatement stmt = null, stmt2 = null;
         dbManager =  DbManager.getInstance();
-
+        dbManager.connectToDB();
         stmt = dbManager.getConnection().prepareStatement(insert_query);
         stmt.setString(1, title);
         stmt.setInt(2, year);

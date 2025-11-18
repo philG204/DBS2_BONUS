@@ -5,12 +5,14 @@ movieID INTEGER NOT NULL,
 title VARCHAR(250) NOT NULL,
 year INTEGER NOT NULL,
 type VARCHAR (250) NOT NULL,
+CONSTRAINT movie_title UNIQUE (title),
 PRIMARY KEY (movieID)
 );
 
 CREATE TABLE Genre(
 genreID INTEGER NOT NULL,
 genre VARCHAR(250) NOT NULL,
+CONSTRAINT genre_name UNIQUE (genre),
 PRIMARY KEY (genreID)
 );
 
@@ -18,14 +20,16 @@ CREATE TABLE movieGenre(
 genreID INTEGER NOT NULL,
 movieID INTEGER NOT NULL,
 FOREIGN KEY (genreID) REFERENCES Genre(genreID),
-FOREIGN KEY (movieID) REFERENCES Movie(movieID) ON DELETE CASCADE,
-PRIMARY KEY (genreID, movieID)
+FOREIGN KEY (movieID) REFERENCES Movie(movieID),
+CONSTRAINT genre_movie UNIQUE (genreID, movieID),
+PRIMARY KEY (movieID, genreID)
 );
 
 CREATE TABLE Person(
 personID INTEGER NOT NULL,
 name VARCHAR(250) NOT NULL,
-PRIMARY KEY (personID)
+PRIMARY KEY (personID),
+CONSTRAINT p_name UNIQUE (name)
 );
 
 CREATE TABLE movieCharacter(
@@ -35,11 +39,10 @@ personID INTEGER NOT NULL,
 character VARCHAR(250) NOT NULL,
 position INTEGER,
 alias VARCHAR(250),
-FOREIGN KEY (movieID) REFERENCES Movie(movieID) ON DELETE CASCADE,
+FOREIGN KEY (movieID) REFERENCES Movie(movieID),
 FOREIGN KEY (personID) REFERENCES Person(personID),
 PRIMARY KEY (movCharID)
 );
-
 CREATE SEQUENCE seq_movie;
 SELECT nextval('seq_movie');
 SELECT currval('seq_movie');
@@ -54,4 +57,10 @@ SELECT currval('seq_genre');
 
 CREATE SEQUENCE seq_person;
 SELECT nextval('seq_person');
+SELECT currval('seq_person');
+SELECT currval('seq_genre');
+
+CREATE SEQUENCE seq_person;
+SELECT nextval('seq_person');
+
 SELECT currval('seq_person');

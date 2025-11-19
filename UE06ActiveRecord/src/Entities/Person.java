@@ -6,6 +6,10 @@ import java.sql.SQLException;
 import db.*;
 
 public class Person {
+    public Person(String name) {
+        this.name = name;
+    }
+    public Person() {}
     private long personID;
     private String name;
 

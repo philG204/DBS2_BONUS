@@ -35,12 +35,6 @@ public static void testDBConnection() throws SQLException {
  * @throws SQLException
  */
 public static void main(String[] args) throws Exception {
-    //testDBConnection();
-//    Genre genre = new Genre();
-//    genre.setGenre("Horror");
-//    genre.insert();
-
-
     // Bitte stehen lassen! Sonst ist keine Verbindung zur DB bzw. zur GUI möglich!
     DbManager dbManager = DbManager.getInstance();
     dbManager.connectToDB();
@@ -48,26 +42,20 @@ public static void main(String[] args) throws Exception {
     starter.run();
     //=============================================================================
 
- Movie m3gan = new Movie();
-    m3gan.setTitle("M3GAN");
-    m3gan.setType("C");
-    m3gan.setYear(2022);
+ Movie m3gan = new Movie("M3GAN",2022,"C");
     //m3gan.insert();
-
-
-    Person Allison_Williams = new Person();
-    Allison_Williams.setName("Allison Williams");
+    m3gan.setTitle("Not M3GAN");
+    //m3gan.update();
+    Person Allison_Williams = new Person("Allison Williams");
     //Allison_Williams.insert();
-    Person Violet_McGraw = new Person();
-    Violet_McGraw.setName("Violet McGraw");
+    Person Violet_McGraw = new Person("Allison Williams");
     //Violet_McGraw.insert();
-
-    Genre horror = new Genre();
-    horror.setGenre("Horror");
+    m3gan.delete();
+    Genre horror = new Genre("Horror");
     //horror.insert();
     MovieGenre mv = new MovieGenre();
-    mv.insert("M3GAN", "Horror");
-    MovieCharacter movChar = new MovieCharacter();
-    movChar.insert("M3GAN","Allison Williams","Gemma Forrester",1,"Gem");
+   // mv.insert("M3GAN", "Horror");
+    //MovieCharacter movChar = new MovieCharacter();
+    //movChar.insert("M3GAN","Allison Williams","Gemma Forrester",1,"Gem");
 
 }

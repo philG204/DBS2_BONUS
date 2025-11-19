@@ -5,6 +5,9 @@ import java.sql.SQLException;
 import db.*;
 
 public class Genre {
+    public Genre(String genre){
+        this.genre = genre;
+    }
     private String genre;
     private long genreID;
     private DbManager dbManager;
@@ -37,14 +40,6 @@ public class Genre {
         if(status == 0) {
             System.out.println("Eingefügt in Genre:\ngenreID: "+genreID+"\ngenre: "+genre);
         }
-//        int position1 = 1;
-//        int position2 = 2;
-//        long sequence = 0;
-//        sequence = dbManager.getID(stmt);
-//        dbManager.getConnection().prepareStatement(getSequence);
-//        stmt.setLong(position1,sequence);
-//        stmt.setString(position2,getGenre());
-//        dbManager.executeInsert(stmt);
         return status;
     }
 }

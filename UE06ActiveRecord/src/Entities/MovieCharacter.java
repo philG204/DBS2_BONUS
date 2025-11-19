@@ -60,24 +60,26 @@ public class MovieCharacter{
         String getMovieID = "SELECT movieID FROM movie WHERE title = ? ";
         String getPersonID = "SELECT personID FROM person WHERE name = ?";
         String insert_query = "INSERT INTO movieCharacter VALUES(nextval('seq_movieCharacter'), ?, ?, ?, ?, ?);";
-        String get_id_query = "SELECT currval('seq_movieCharacter');";
+        String get_id_query = "SELECT currval('seq_movieCharacter')";
         PreparedStatement stmt = null;
         dbManager =  DbManager.getInstance();
         dbManager.connectToDB();
         stmt = dbManager.getConnection().prepareStatement(getMovieID);
+        stmt.setString(1, movieTitle);
         movieID = dbManager.getID(stmt);
         stmt = dbManager.getConnection().prepareStatement(getPersonID);
+        stmt.setString(1, personName);
         personID = dbManager.getID(stmt);
         // Einfügen der Movie-Daten in DB:
-       stmt.setLong(1, movieID);
-       stmt.setLong(2, personID);
-       stmt.setString(3, character);
-       stmt.setInt(4, position);
-       stmt.setString(5, alias);
-       dbManager.getConnection().prepareStatement(get_id_query);
-       movieCharID = dbManager.getID(stmt);
         stmt = dbManager.getConnection().prepareStatement(insert_query);
-       dbManager.executeInsert(stmt);
+        stmt.setLong(1, movieID);
+        stmt.setLong(2, personID);
+        stmt.setString(3, character);
+        stmt.setInt(4, position);
+        stmt.setString(5, alias);
+        dbManager.executeInsert(stmt);
+        stmt =  dbManager.getConnection().prepareStatement(get_id_query);
+        movieCharID = dbManager.getID(stmt);
         System.out.println("Eingefügt in MovieCharacter:\nid: " + movieCharID + "\nmovieID: " + movieID + "\ncharID: " + personID + "\ncharacter: " + character + "\nposition: " + position + "\nalias: " + alias+"\n");
         return cnt;
     }

@@ -3,6 +3,7 @@ package logic;
 import java.util.ArrayList;
 import java.util.List;
 
+import Entities.Genre;
 import Entities.Movie;
 import Factories.MovieFactory;
 import logic.dto.CharacterDTO;
@@ -19,23 +20,14 @@ public class MovieManager {
 	 * @throws Exception Beschreibt evtl. aufgetretenen Fehler
 	 */
 	public List<MovieDTO> getMovieList(String search) throws Exception {
-
-        if(search.isEmpty()){
-            search = "*";
-        }
-
         // Holt eine (Array)List mit Movie-Objekten.
         List<Movie> movieList =  MovieFactory.MovieFindByTitle(search);
         MovieDTO movieDTO;
         List<MovieDTO> movieDTOList = new ArrayList<>();
 
-        if(movieList.isEmpty()){
-            return null;
-        }
-
         // Konvertiert Movie-Objekte in movieDTO-Objekte um.
-        for(Movie m : movieList){
-            movieDTO = createMovieDTO(m.getMovieId());
+        for (Movie row : movieList) {
+            movieDTO = createMovieDTO(row);
             movieDTOList.add(movieDTO);
         }
 
@@ -53,6 +45,20 @@ public class MovieManager {
 	 */
 	public void insertUpdateMovie(MovieDTO movieDTO) throws Exception {		
 		/* TODO */
+        Movie m = new Movie();
+        m.setTitle(movieDTO.getTitle());
+        m.setYear(movieDTO.getYear());
+        m.setType(movieDTO.getType());
+
+        // Insert:
+        if(movieDTO.getId() == null){
+            m.insert();
+
+            // Update:
+        } else {
+            m.update();
+
+        }
 	}
 
 	/**
@@ -73,15 +79,15 @@ public class MovieManager {
 	 * @throws Exception Z.B. bei Datenbank-Fehlern oder falls der Movie nicht existiert.
 	 */
 	public MovieDTO getMovie(long movieId) throws Exception {
-        MovieDTO mdto =  createMovieDTO(movieId);
-        CharacterDTO cdto = new CharacterDTO();
-        mdto.addCharacter(cdto);
+//        MovieDTO mdto =  createMovieDTO(movieId);
+//        CharacterDTO cdto = new CharacterDTO();
+//        mdto.addCharacter(cdto);
 
 
         //TODO: Genres zu einem Film auslesen
         //mdto.setGenres();
 
-        return mdto;
+        return null;
 	}
 
     /**
@@ -90,11 +96,22 @@ public class MovieManager {
      * @return
      * @throws Exception
      */
-    private MovieDTO createMovieDTO(long movieId) throws Exception {
+//    private MovieDTO createMovieDTO(long movieId) throws Exception {
+//        MovieDTO mdto = new MovieDTO();
+//
+//
+//        Movie m = MovieFactory.MovieFindById(movieId);
+//        mdto.setId((int)m.getMovieId());
+//        mdto.setTitle(m.getTitle());
+//        mdto.setYear(m.getYear());
+//        mdto.setType(m.getType());
+//
+//        return mdto;
+//    }
+
+    private MovieDTO createMovieDTO(Movie m) throws Exception {
         MovieDTO mdto = new MovieDTO();
 
-
-        Movie m = MovieFactory.MovieFindById(movieId);
         mdto.setId((int)m.getMovieId());
         mdto.setTitle(m.getTitle());
         mdto.setYear(m.getYear());

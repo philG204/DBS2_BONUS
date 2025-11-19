@@ -61,10 +61,10 @@ public class Movie implements DbActions {
 
         try {
             stmt = dbManager.getConnection().prepareStatement(update_movie);
-            stmt.setString(2, title);
-            stmt.setInt(3, year);
-            stmt.setString(4, type);
-            stmt.setLong(1, movieID);
+            stmt.setString(1, title);
+            stmt.setInt(2, year);
+            stmt.setString(3, type);
+            stmt.setLong(4, movieID);
             cnt = stmt.executeUpdate();
         } catch(SQLException e) {
             System.err.println("Fehler beim einfügen:\n" + e.getMessage());

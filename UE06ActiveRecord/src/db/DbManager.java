@@ -54,7 +54,7 @@ public class DbManager {
             System.out.println("Verbunden mit "+url+"!");
         } catch(SQLException e){
             // e.printStackTrace();
-            throw new RuntimeException("Fehler beim Aufbau der Datenbankverbindung!\n", e);
+            throw new RuntimeException("Fehler beim Aufbau der Datenbankverbindung!\n"+e.getMessage());
         }
     }
 
@@ -68,17 +68,19 @@ public class DbManager {
         try {
             stmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("Fehler beim einfügen:\n"+e.getMessage());
+            System.out.println("Fehler beim Einfügen.\nQuery: "+stmt.toString());
             status = 1;
+            throw new RuntimeException(e);
+
         }
 
-        if(stmt!=null){
-            try {
-                stmt.close();
-            } catch (SQLException e) {
-                System.out.println("Fehler beim schließen:\n"+e.getMessage());
-                status = 1;
-            }
+        try {
+            stmt.close();
+        } catch (SQLException e) {
+            System.out.println("Fehler beim Schließen.\nQuery: "+stmt.toString());
+            status = 1;
+            throw new RuntimeException(e);
+
         }
         return status;
     }
@@ -99,7 +101,7 @@ public class DbManager {
                 id = rs.getLong(1);
             }
         } catch (SQLException e) {
-            System.err.println("Fehler beim auslesen:\n"+e.getMessage());
+            System.err.println("Fehler beim auslesen.\nQuery: "+stmt.toString());
             throw new RuntimeException(e);
 
         } finally {
@@ -137,7 +139,7 @@ public class DbManager {
             }
             return rows;
         } catch (SQLException e) {
-            System.err.println("Fehler beim auslesen:\n"+e.getMessage());
+            System.err.println("Fehler beim Auslesen.\nQuery: "+stmt.toString());
             throw new RuntimeException(e);
 
         } finally {

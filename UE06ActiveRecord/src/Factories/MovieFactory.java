@@ -27,7 +27,7 @@ public class MovieFactory {
         conn = DbManager.getInstance();
         //conn.connectToDB();
 
-        stmt = conn.getConnection().prepareStatement(movieId_select);
+        stmt = DbManager.getConnection().prepareStatement(movieId_select);
         stmt.setLong(1, id);
         rs = conn.executeSelect(stmt);
 

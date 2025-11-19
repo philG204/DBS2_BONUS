@@ -23,7 +23,7 @@ public class MovieGenre implements DbActions {
         PreparedStatement stmt;
         dbManager = DbManager.getInstance();
 
-        stmt = dbManager.getConnection().prepareStatement(insert_query);
+        stmt = DbManager.getConnection().prepareStatement(insert_query);
         stmt.setLong(1, genreID);
         stmt.setLong(2, movieID);
         status = dbManager.executeInsert(stmt);

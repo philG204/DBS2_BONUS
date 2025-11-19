@@ -31,7 +31,7 @@ public class Genre implements DbActions {
         DbManager dbManager1 = null;
 
         dbManager1 = DbManager.getInstance();
-        stmt = dbManager1.getConnection().prepareStatement(allGenres_sql);
+        stmt = DbManager.getConnection().prepareStatement(allGenres_sql);
         rs = dbManager1.executeSelect(stmt);
         return rs;
     }
@@ -43,11 +43,11 @@ public class Genre implements DbActions {
         String insert_query = "INSERT INTO Genre VALUES (nextval('seq_genre'), ?);";
         dbManager = DbManager.getInstance();
 
-        stmt = dbManager.getConnection().prepareStatement(insert_query);
+        stmt = DbManager.getConnection().prepareStatement(insert_query);
         stmt.setString(1, genre);
         status = dbManager.executeInsert(stmt);
 
-        stmt2 = dbManager.getConnection().prepareStatement(getSequence);
+        stmt2 = DbManager.getConnection().prepareStatement(getSequence);
         this.genreID = dbManager.getID(stmt2);
 
         if(status == 0) {

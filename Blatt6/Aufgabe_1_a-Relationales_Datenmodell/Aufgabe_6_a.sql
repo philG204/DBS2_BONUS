@@ -1,4 +1,9 @@
 DROP TABLE IF EXISTS Movie, Genre, movieGenre, Person, movieCharacter;
+DROP SEQUENCE seq_movie;
+DROP SEQUENCE seq_genre;
+DROP SEQUENCE seq_person;
+DROP SEQUENCE seq_movieCharacter;
+
 
 CREATE TABLE Movie(
 movieID INTEGER NOT NULL,

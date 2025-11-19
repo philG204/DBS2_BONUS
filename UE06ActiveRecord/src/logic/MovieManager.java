@@ -49,7 +49,6 @@ public class MovieManager {
         m.setTitle(movieDTO.getTitle());
         m.setYear(movieDTO.getYear());
         m.setType(movieDTO.getType());
-        if (movieDTO.getId() != 0) m.SetId(movieDTO.getId());
 
         // Insert/ Add:
         if(movieDTO.getId() == null){
@@ -58,6 +57,7 @@ public class MovieManager {
 
             // Update/ Edit:
         } else {
+            m.SetId(movieDTO.getId());
             m.update();
             movieDTO.setTitle(m.getTitle());
             movieDTO.setYear(m.getYear());

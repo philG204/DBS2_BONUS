@@ -96,7 +96,7 @@ public class MovieManager {
      * @return
      * @throws Exception
      */
-//    private MovieDTO createMovieDTO(long movieId) throws Exception {
+    private MovieDTO createMovieDTO(long movieId) throws Exception {
 //        MovieDTO mdto = new MovieDTO();
 //
 //
@@ -107,7 +107,8 @@ public class MovieManager {
 //        mdto.setType(m.getType());
 //
 //        return mdto;
-//    }
+        return null;
+    }
 
     private MovieDTO createMovieDTO(Movie m) throws Exception {
         MovieDTO mdto = new MovieDTO();

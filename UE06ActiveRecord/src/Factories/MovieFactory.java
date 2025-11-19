@@ -19,10 +19,10 @@ public class MovieFactory {
      * @throws SQLException
      */
     public static Movie MovieFindById(long id) throws SQLException{
-        String movieId_select = "SELECT title, year, type FROM Movie WHERE movieID = ?";
+        String movieId_select = "SELECT movieid, title, year, type FROM Movie WHERE movieID = ?";
         PreparedStatement stmt = null;
         List<Map<String, Object>> rs = null;
-        Movie movie = new Movie();;
+        Movie movie = new Movie();
 
         conn = DbManager.getInstance();
         //conn.connectToDB();

@@ -49,15 +49,19 @@ public class MovieManager {
         m.setTitle(movieDTO.getTitle());
         m.setYear(movieDTO.getYear());
         m.setType(movieDTO.getType());
+        if (movieDTO.getId() != 0) m.SetId(movieDTO.getId());
 
-        // Insert:
+        // Insert/ Add:
         if(movieDTO.getId() == null){
             m.insert();
+            movieDTO.setId((int)m.getMovieId());
 
-            // Update:
+            // Update/ Edit:
         } else {
             m.update();
-
+            movieDTO.setTitle(m.getTitle());
+            movieDTO.setYear(m.getYear());
+            movieDTO.setType(m.getType());
         }
 	}
 
@@ -79,45 +83,26 @@ public class MovieManager {
 	 * @throws Exception Z.B. bei Datenbank-Fehlern oder falls der Movie nicht existiert.
 	 */
 	public MovieDTO getMovie(long movieId) throws Exception {
-//        MovieDTO mdto =  createMovieDTO(movieId);
-//        CharacterDTO cdto = new CharacterDTO();
-//        mdto.addCharacter(cdto);
+        Movie m = MovieFactory.MovieFindById(movieId);
+        MovieDTO mdto =  createMovieDTO(m);
 
+        //TODO: Genres und Character zu einem Film auslesen
 
-        //TODO: Genres zu einem Film auslesen
-        //mdto.setGenres();
-
-        return null;
+        return mdto;
 	}
 
     /**
      * Erstellt aus gegebener movieId ein MovieDTO-Objekt.
-     * @param movieId
+     * @param m
      * @return
      * @throws Exception
      */
-    private MovieDTO createMovieDTO(long movieId) throws Exception {
-//        MovieDTO mdto = new MovieDTO();
-//
-//
-//        Movie m = MovieFactory.MovieFindById(movieId);
-//        mdto.setId((int)m.getMovieId());
-//        mdto.setTitle(m.getTitle());
-//        mdto.setYear(m.getYear());
-//        mdto.setType(m.getType());
-//
-//        return mdto;
-        return null;
-    }
-
     private MovieDTO createMovieDTO(Movie m) throws Exception {
         MovieDTO mdto = new MovieDTO();
-
         mdto.setId((int)m.getMovieId());
         mdto.setTitle(m.getTitle());
         mdto.setYear(m.getYear());
         mdto.setType(m.getType());
-
         return mdto;
     }
 }

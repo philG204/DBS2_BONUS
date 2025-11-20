@@ -1,8 +1,7 @@
 package db;
 
 import java.sql.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -55,7 +54,7 @@ public class DbManager {
             System.out.println("Verbunden mit "+url+"!");
         } catch(SQLException e){
             // e.printStackTrace();
-            throw new RuntimeException("Fehler beim Aufbau der Datenbankverbindung!\n", e);
+            throw new RuntimeException("Fehler beim Aufbau der Datenbankverbindung!\n"+e.getMessage());
         }
     }
 
@@ -69,17 +68,19 @@ public class DbManager {
         try {
             stmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("Fehler beim einfügen:\n"+e.getMessage());
+            System.out.println("Fehler beim Einfügen.\nQuery: "+stmt.toString());
             status = 1;
+            throw new RuntimeException(e);
+
         }
 
-        if(stmt!=null){
-            try {
-                stmt.close();
-            } catch (SQLException e) {
-                System.out.println("Fehler beim schließen:\n"+e.getMessage());
-                status = 1;
-            }
+        try {
+            stmt.close();
+        } catch (SQLException e) {
+            System.out.println("Fehler beim Schließen.\nQuery: "+stmt.toString());
+            status = 1;
+            throw new RuntimeException(e);
+
         }
         return status;
     }
@@ -100,27 +101,19 @@ public class DbManager {
             id = rs.getLong(1);
 
         } catch (SQLException e) {
-            System.err.println("Fehler beim auslesen:\n"+e.getMessage());
+            System.err.println("Fehler beim auslesen.\nQuery: "+stmt.toString());
             throw new RuntimeException(e);
 
 
 
         } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException e) {
-                    System.err.println("Fehler beim schlie0en:\n"+e.getMessage());
-                }
-            }
-
-            if (stmt != null) {
-                try {
-                    stmt.close();
-                } catch (SQLException e) {
-                    System.err.println("Fehler beim schlie0en:\n"+e.getMessage());
-                }
-            }
+//            if (stmt != null) {
+//                try {
+//                    stmt.close();
+//                } catch (SQLException e) {
+//                    System.err.println("Fehler beim schlie0en:\n"+e.getMessage());
+//                }
+//            }
         }
         return id;
     }
@@ -131,24 +124,34 @@ public class DbManager {
      * @param stmt
      * @return ResultSet
      */
-    public ResultSet executeSelect(PreparedStatement stmt){
-        ResultSet rs = null;
+    public List<Map<String, Object>> executeSelect(PreparedStatement stmt){
+        List<Map<String, Object>> rows = new ArrayList<>();
 
         try {
-            rs = stmt.executeQuery();
-            return rs;
+            ResultSet rs = stmt.executeQuery();
+            ResultSetMetaData meta = rs.getMetaData();
+            int columnCount = meta.getColumnCount();
+
+            while (rs.next()) {
+                Map<String, Object> row = new HashMap<>();
+                for (int i = 1; i <= columnCount; i++) {
+                    row.put(meta.getColumnLabel(i), rs.getObject(i));
+                }
+                rows.add(row);
+            }
+            return rows;
         } catch (SQLException e) {
-            System.err.println("Fehler beim auslesen:\n"+e.getMessage());
+            System.err.println("Fehler beim Auslesen.\nQuery: "+stmt.toString());
             throw new RuntimeException(e);
 
         } finally {
-            if (stmt != null) {
-               // try {
-                   // stmt.close();
-               // } catch (SQLException e) {
-                 //   System.err.println("Fehler beim schlie0en:\n"+e.getMessage());
-                //}
-            }
+//            if (stmt != null) {
+//                try {
+//                    stmt.close();
+//                } catch (SQLException e) {
+//                    System.err.println("Fehler beim schlie0en:\n"+e.getMessage());
+//                }
+//            }
         }
     }
 

@@ -29,30 +29,30 @@ public class Movie {
     public void setType(String type){ this.type = type; }
 
 
-    //public void SetId(long id){ this.movieID = id; }
-
+    public void SetId(long id){ this.movieID = id; }
 
     public int insert() throws SQLException{
         String insert_query = "INSERT INTO Movie VALUES ( nextval('seq_movie'), ?, ?, ? );";
         String id_select_query = "SELECT currval('seq_movie');";
 
-        int cnt=0;
+        int status=0;
 
         PreparedStatement stmt = null, stmt2 = null;
         dbManager =  DbManager.getInstance();
-        dbManager.connectToDB();
-        stmt = dbManager.getConnection().prepareStatement(insert_query);
+
+        stmt = DbManager.getConnection().prepareStatement(insert_query);
         stmt.setString(1, title);
         stmt.setInt(2, year);
         stmt.setString(3, type);
-        dbManager.executeInsert(stmt);
+        status = dbManager.executeInsert(stmt);
 
-        stmt2 = dbManager.getConnection().prepareStatement(id_select_query);
+        stmt2 = DbManager.getConnection().prepareStatement(id_select_query);
         this.movieID = dbManager.getID(stmt2);
 
-        System.out.println("Eingefügt in Movie:\nid: "+ movieID +"\ntitle: "+title+"\nyear: "+year+"\ntype: "+type);
-
-        return cnt;
+        if(status == 0) {
+            System.out.println("Eingefügt in Movie:\nid: " + movieID + "\ntitle: " + title + "\nyear: " + year + "\ntype: " + type);
+        }
+        return status;
     }
 
     public int update() throws SQLException {
@@ -60,41 +60,40 @@ public class Movie {
 
         PreparedStatement stmt = null;
 
-        int cnt = 0;
+        int status = 0;
 
         dbManager =  DbManager.getInstance();
         dbManager.connectToDB();
 
         try {
-            stmt = dbManager.getConnection().prepareStatement(update_movie);
+            stmt = DbManager.getConnection().prepareStatement(update_movie);
             stmt.setString(1, title);
             stmt.setInt(2, year);
             stmt.setString(3, type);
             stmt.setLong(4, movieID);
-           cnt = stmt.executeUpdate();
+            status = stmt.executeUpdate();
         } catch(SQLException e) {
             System.err.println("Fehler beim einfügen:\n" + e.getMessage());
         }
-        System.out.println("Daten aktualisiert: Titel: "+title + " Jahr: "+year +" Typ: " +type);
-        return cnt;
+        return status;
     }
 
     public int delete() throws SQLException {
         String delete_movie = "DELETE FROM Movie WHERE title = ?";
         PreparedStatement stmt = null;
 
-        int cnt = 0;
+        int status = 0;
 
         dbManager =  DbManager.getInstance();
         dbManager.connectToDB();
 
         try {
-            stmt = dbManager.getConnection().prepareStatement(delete_movie);
-            stmt.setString(1, title);
-            cnt = stmt.executeUpdate();
+            stmt = DbManager.getConnection().prepareStatement(delete_movie);
+            stmt.setLong(1, movieID);
+            status = stmt.executeUpdate();
         } catch(SQLException e) {
             System.err.println("Fehler beim einfügen:\n" + e.getMessage());
         }
-        return cnt;
+        return status;
     }
 }

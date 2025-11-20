@@ -1,7 +1,11 @@
 package Entities;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
+
 import db.*;
 
 public class Genre {
@@ -23,18 +27,30 @@ public class Genre {
         this.genre = genre;
     }
 
+    public static List<Map<String, Object>>  getALlGenres() throws SQLException{
+        String allGenres_sql = "SELECT genre FROM Genre";
+        PreparedStatement stmt = null;
+        List<Map<String, Object>> rs = null;
+        DbManager dbManager1 = null;
+
+        dbManager1 = DbManager.getInstance();
+        stmt = DbManager.getConnection().prepareStatement(allGenres_sql);
+        rs = dbManager1.executeSelect(stmt);
+        return rs;
+    }
+
     public int insert() throws SQLException {
         int status = 0;
         PreparedStatement stmt = null, stmt2 = null;
         String getSequence = "SELECT currval('seq_genre')";
         String insert_query = "INSERT INTO Genre VALUES (nextval('seq_genre'), ?);";
         dbManager = DbManager.getInstance();
-        dbManager.connectToDB();
-        stmt = dbManager.getConnection().prepareStatement(insert_query);
+
+        stmt = DbManager.getConnection().prepareStatement(insert_query);
         stmt.setString(1, genre);
         status = dbManager.executeInsert(stmt);
 
-        stmt2 = dbManager.getConnection().prepareStatement(getSequence);
+        stmt2 = DbManager.getConnection().prepareStatement(getSequence);
         this.genreID = dbManager.getID(stmt2);
 
         if(status == 0) {

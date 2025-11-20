@@ -8,7 +8,6 @@ import java.sql.*;
  */
 public static void testDBConnection() throws SQLException {
     String url="jdbc:postgresql://localhost:5432/db01";
-    //DbManager dbManager = new DbManager(credentials.getUsername(), credentials.getPassword(), credentials.getUrl());
     DbManager dbManager = DbManager.getInstance();
     dbManager.connectToDB();
     String sqlTest = "SELECT ID, TITLE FROM MOVIEDB2.MOVIE WHERE ID BETWEEN 600000 AND 600100";
@@ -42,20 +41,24 @@ public static void main(String[] args) throws Exception {
     starter.run();
     //=============================================================================
 
- Movie m3gan = new Movie("M3GAN",2022,"C");
-    //m3gan.insert();
-    m3gan.setTitle("Not M3GAN");
-    //m3gan.update();
-    Person Allison_Williams = new Person("Allison Williams");
-    //Allison_Williams.insert();
-    Person Violet_McGraw = new Person("Allison Williams");
-    //Violet_McGraw.insert();
-    m3gan.delete();
-    Genre horror = new Genre("Horror");
-    //horror.insert();
-    MovieGenre mv = new MovieGenre();
-   // mv.insert("M3GAN", "Horror");
-    //MovieCharacter movChar = new MovieCharacter();
-    //movChar.insert("M3GAN","Allison Williams","Gemma Forrester",1,"Gem");
 
+//    Movie m3gan = new Movie();
+//    m3gan.setTitle("Der Terminator");
+//    m3gan.setType("C");
+//    m3gan.setYear(1998);
+//    m3gan.insert();
+//
+//
+//    Person Allison_Williams = new Person();
+//    Allison_Williams.setName("Arnold Schwarzenegger");
+//    Allison_Williams.insert();
+//    Person Violet_McGraw = new Person();
+//    Violet_McGraw.setName("Violet McGraw");
+//    Violet_McGraw.insert();
+//
+//    Genre scienceFiction = new Genre();
+//    scienceFiction.setGenre("Scinece Fiction");
+//    scienceFiction.insert();
+//    MovieGenre mv = new MovieGenre();
+    //mv.insert("Der Terminator","Science Fiction");
 }

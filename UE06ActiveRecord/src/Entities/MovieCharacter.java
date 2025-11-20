@@ -55,10 +55,8 @@ public class MovieCharacter{
 
 // Verknüft die FilmID mit der PersonID und dem Character, sowie der positon und alias zusammen
 
-    public int insert(String movieTitle, String personName, String character, int position, String alias) throws SQLException {
-        int cnt = 0;
-        String getMovieID = "SELECT movieID FROM movie WHERE title = ? ";
-        String getPersonID = "SELECT personID FROM person WHERE name = ?";
+    public int insert() throws SQLException {
+        int status = 0;
         String insert_query = "INSERT INTO movieCharacter VALUES(nextval('seq_movieCharacter'), ?, ?, ?, ?, ?);";
         String get_id_query = "SELECT currval('seq_movieCharacter')";
         PreparedStatement stmt = null;
@@ -71,16 +69,22 @@ public class MovieCharacter{
         stmt.setString(1, personName);
         personID = dbManager.getID(stmt);
         // Einfügen der Movie-Daten in DB:
-        stmt = dbManager.getConnection().prepareStatement(insert_query);
-        stmt.setLong(1, movieID);
-        stmt.setLong(2, personID);
-        stmt.setString(3, character);
-        stmt.setInt(4, position);
-        stmt.setString(5, alias);
-        dbManager.executeInsert(stmt);
-        stmt =  dbManager.getConnection().prepareStatement(get_id_query);
-        movieCharID = dbManager.getID(stmt);
-        System.out.println("Eingefügt in MovieCharacter:\nid: " + movieCharID + "\nmovieID: " + movieID + "\ncharID: " + personID + "\ncharacter: " + character + "\nposition: " + position + "\nalias: " + alias+"\n");
-        return cnt;
+       stmt = DbManager.getConnection().prepareStatement(insert_query);
+       stmt.setLong(1, movieID);
+       stmt.setLong(2, charID);
+       stmt.setString(3, character);
+       stmt.setInt(4, position);
+       stmt.setString(5, alias);
+       status = dbManager.executeInsert(stmt);
+
+
+        // Holen der movieID:
+        stmt2 = DbManager.getConnection().prepareStatement(get_id_query);
+        this.movieCharID = dbManager.getID(stmt2);
+
+        if(status == 0){
+            System.out.println("Eingefügt in MovieCharacter:\nid: " + movieCharID + "\nmovieID: " + movieID + "\ncharID: " + charID + "\ncharacter: " + character + "\nposition: " + position + "\nalias: " + alias+"\n");
+        }
+        return status;
     }
 }

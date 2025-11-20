@@ -1,6 +1,11 @@
 package logic;
 
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import Entities.Genre;
 
 public class GenreManager {
 
@@ -11,8 +16,15 @@ public class GenreManager {
 	 * @throws Exception error describing e.g. the database problem
 	 */
 	public List<String> getGenres() throws Exception {
-		/* TODO */
-		return null;
+		List<String> genres = new ArrayList<String>();
+        List<Map<String, Object>>  allGenres = Genre.getALlGenres();
+
+        for (Map<String, Object> row : allGenres) {
+            System.out.println("ID = " + row.get("id"));
+            System.out.println("Name = " + row.get("genre"));
+            genres.add((String) row.get("genre"));
+        }
+		return genres;
 	}
 
 

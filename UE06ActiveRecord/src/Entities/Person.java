@@ -3,6 +3,9 @@ package Entities;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
+
 import db.*;
 
 public class Person {
@@ -28,18 +31,20 @@ public class Person {
         String insert_person = "INSERT INTO Person VALUES (nextval('seq_person'), ?);";
         String id_select_query = "SELECT currval('seq_person');";
         PreparedStatement stmt = null, stmt2 = null;
-        int cnt = 0;
+        int status = 0;
         dbManager =  DbManager.getInstance();
-        dbManager.connectToDB();
-        stmt = dbManager.getConnection().prepareStatement(insert_person);
-        stmt.setString(1, name);
-        dbManager.executeInsert(stmt);
 
-        stmt2 = dbManager.getConnection().prepareStatement(id_select_query);
+        stmt = DbManager.getConnection().prepareStatement(insert_person);
+        stmt.setString(1, name);
+        status = dbManager.executeInsert(stmt);
+
+        stmt2 = DbManager.getConnection().prepareStatement(id_select_query);
         this.personID = dbManager.getID(stmt2);
 
-        System.out.println("Eingefügt in Person:\nPpersonID: " + this.personID + "\nname: "+this.name);
-        return cnt;
+        if(status==0) {
+            System.out.println("Eingefügt in Person:\nPpersonID: " + this.personID + "\nname: " + this.name);
+        }
+        return status;
     }
     /*
     liefert die ID als ResultSet zurück
@@ -50,8 +55,8 @@ public class Person {
 
         PreparedStatement stmt = DbManager.getConnection().prepareStatement("SELECT ID FROM Person WHERE name = ?");
         stmt.setString(1, name);
-        ResultSet rs = DbManager.getInstance().executeSelect(stmt);
-        return rs;
+        //ResultSet rs = DbManager.getInstance().executeSelect(stmt);
+        return null;
     }
     /*
     gibt mehrere Namen in einem ResultSet zurück akzeptiert einen Namen
@@ -59,13 +64,27 @@ public class Person {
     public ResultSet getNameListAsResultSet (String name) throws SQLException {
         PreparedStatement stmt = DbManager.getConnection().prepareStatement("SELECT name FROM Person WHERE name = LIKE %?%");
         stmt.setString(1, name);
-        ResultSet rs = DbManager.getInstance().executeSelect(stmt);
-        return rs;
+        //ResultSet rs = DbManager.getInstance().executeSelect(stmt);
+        return null;
     }
     public ResultSet getNameAsResultSet(String name) throws SQLException {
         PreparedStatement stmt = DbManager.getConnection().prepareStatement("SELECT name FROM Person WHERE name = ?");
         stmt.setString(1, name);
-        ResultSet rs = DbManager.getInstance().executeSelect(stmt);
+        //ResultSet rs = DbManager.getInstance().executeSelect(stmt);
+        return null;
+    }
+
+    public static List<Map<String, Object>> getPersons(String name) throws SQLException {
+        PreparedStatement stmt = DbManager.getConnection().prepareStatement("SELECT name FROM Person WHERE name LIKE ?");
+        stmt.setString(1, "%" + name + "%");
+        List<Map<String, Object>> rs = DbManager.getInstance().executeSelect(stmt);
+        return rs;
+    }
+
+    public static List<Map<String, Object>> getPerson(String name) throws SQLException {
+        PreparedStatement stmt = DbManager.getConnection().prepareStatement("SELECT * FROM Person WHERE name = ?");
+        stmt.setString(1, name);
+        List<Map<String, Object>> rs = DbManager.getInstance().executeSelect(stmt);
         return rs;
     }
 }

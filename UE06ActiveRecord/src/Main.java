@@ -33,13 +33,7 @@ public static void testDBConnection() throws SQLException {
  * @param args
  * @throws SQLException
  */
-public static void main(String[] args) throws SQLException {
-    //testDBConnection();
-//    Genre genre = new Genre();
-//    genre.setGenre("Horror");
-//    genre.insert();
-
-
+public static void main(String[] args) throws Exception {
     // Bitte stehen lassen! Sonst ist keine Verbindung zur DB bzw. zur GUI möglich!
     DbManager dbManager = DbManager.getInstance();
     dbManager.connectToDB();

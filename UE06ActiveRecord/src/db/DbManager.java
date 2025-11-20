@@ -100,12 +100,14 @@ public class DbManager {
         long id=0;
         try {
             rs = stmt.executeQuery();
-            while (rs.next()) {
-                id = rs.getLong(1);
-            }
+            rs.next();
+            id = rs.getLong(1);
+
         } catch (SQLException e) {
             System.err.println("Fehler beim auslesen.\nQuery: "+stmt.toString());
             throw new RuntimeException(e);
+
+
 
         } finally {
 //            if (stmt != null) {

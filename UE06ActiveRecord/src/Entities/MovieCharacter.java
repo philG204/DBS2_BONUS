@@ -1,11 +1,10 @@
 package Entities;
 
-import db.DbActions;
 import db.DbManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class MovieCharacter implements DbActions {
+public class MovieCharacter{
     private long movieCharID;
     private long movieID;
     private long personID;
@@ -54,14 +53,21 @@ public class MovieCharacter implements DbActions {
         this.alias = alias;
     }
 
+// Verknüft die FilmID mit der PersonID und dem Character, sowie der positon und alias zusammen
 
     public int insert() throws SQLException {
         int status = 0;
         String insert_query = "INSERT INTO movieCharacter VALUES(nextval('seq_movieCharacter'), ?, ?, ?, ?, ?);";
-        String get_id_query = "SELECT currval('seq_movieCharacter');";
-        PreparedStatement stmt = null, stmt2 = null;
+        String get_id_query = "SELECT currval('seq_movieCharacter')";
+        PreparedStatement stmt = null;
         dbManager =  DbManager.getInstance();
-
+        dbManager.connectToDB();
+        stmt = dbManager.getConnection().prepareStatement(getMovieID);
+        stmt.setString(1, movieTitle);
+        movieID = dbManager.getID(stmt);
+        stmt = dbManager.getConnection().prepareStatement(getPersonID);
+        stmt.setString(1, personName);
+        personID = dbManager.getID(stmt);
         // Einfügen der Movie-Daten in DB:
        stmt = DbManager.getConnection().prepareStatement(insert_query);
        stmt.setLong(1, movieID);

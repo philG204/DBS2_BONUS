@@ -8,7 +8,11 @@ import java.util.Map;
 
 import db.*;
 
-public class Person implements DbActions {
+public class Person {
+    public Person(String name) {
+        this.name = name;
+    }
+    public Person() {}
     private long personID;
     private String name;
 
@@ -22,7 +26,7 @@ public class Person implements DbActions {
         this.name = name;
     }
 
-    @Override
+
     public int insert() throws SQLException {
         String insert_person = "INSERT INTO Person VALUES (nextval('seq_person'), ?);";
         String id_select_query = "SELECT currval('seq_person');";

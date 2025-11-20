@@ -42,4 +42,7 @@ public class DBConnection {
             System.err.println(e.getMessage());
         }
 	}
+    public static void closeConnection() throws SQLException {
+        conn.close();
+    }
 }

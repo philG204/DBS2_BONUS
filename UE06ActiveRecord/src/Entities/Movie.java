@@ -4,7 +4,12 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import db.*;
 
-public class Movie implements DbActions {
+public class Movie {
+    public Movie(String title, int year, String type){
+        this.title = title;
+        this.year = year;
+        this.type = type;
+    }
     private long movieID;
     private String title;
     private int year;

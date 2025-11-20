@@ -8,7 +8,7 @@ import java.sql.SQLException;
 public class MovieCharacter implements DbActions {
     private long movieCharID;
     private long movieID;
-    private long charID;
+    private long personID;
     private String character;
     private int position;
     private String alias;
@@ -27,10 +27,10 @@ public class MovieCharacter implements DbActions {
     }
 
     public long getPlayerId() {
-        return charID;
+        return personID;
     }
     public void setPlayerId(long charID) {
-        this.charID = charID;
+        this.personID = charID;
     }
 
     public String getCharacter() {
@@ -65,7 +65,7 @@ public class MovieCharacter implements DbActions {
         // Einfügen der Movie-Daten in DB:
        stmt = DbManager.getConnection().prepareStatement(insert_query);
        stmt.setLong(1, movieID);
-       stmt.setLong(2, charID);
+       stmt.setLong(2, personID);
        stmt.setString(3, character);
        stmt.setInt(4, position);
        stmt.setString(5, alias);
@@ -77,7 +77,7 @@ public class MovieCharacter implements DbActions {
         this.movieCharID = dbManager.getID(stmt2);
 
         if(status == 0){
-            System.out.println("Eingefügt in MovieCharacter:\nid: " + movieCharID + "\nmovieID: " + movieID + "\ncharID: " + charID + "\ncharacter: " + character + "\nposition: " + position + "\nalias: " + alias+"\n");
+            System.out.println("Eingefügt in MovieCharacter:\nid: " + movieCharID + "\nmovieID: " + movieID + "\ncharID: " + personID + "\ncharacter: " + character + "\nposition: " + position + "\nalias: " + alias+"\n");
         }
         return status;
     }

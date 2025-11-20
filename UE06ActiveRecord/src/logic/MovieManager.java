@@ -4,8 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import Entities.Genre;
-import Entities.Movie;
+import Entities.*;
 import Factories.MovieFactory;
 import db.DbManager;
 import logic.dto.CharacterDTO;
@@ -56,9 +55,25 @@ public class MovieManager {
         if(movieDTO.getId() == null){
             m.insert();
             movieDTO.setId((int)m.getMovieId());
-
+            for (String genre : movieDTO.getGenres()) {
+                MovieGenre mg = new MovieGenre();
+                mg.setMovieId((int) m.getMovieId());
+                mg.setGenreId(mg.getGenreId());
+                mg.insert();
+            }
+                for (CharacterDTO cdto : movieDTO.getCharacters()) {
+                MovieCharacter mc = new MovieCharacter();
+                mc.setMovieId((int) m.getMovieId());
+                mc.setCharacter(cdto.getCharacter());
+                mc.setAlias(cdto.getAlias());
+                PersonManager ps = new PersonManager();
+                mc.setPlayerId((int) ps.getPerson(cdto.getPlayer()));
+                mc.setAlias(cdto.getAlias());
+                mc.insert();
+            }
             // Update/ Edit:
         } else {
+
             m.SetId(movieDTO.getId());
             m.update();
             movieDTO.setTitle(m.getTitle());

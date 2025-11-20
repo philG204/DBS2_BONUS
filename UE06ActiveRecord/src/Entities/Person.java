@@ -40,6 +40,7 @@ public class Person implements DbActions {
         if(status==0) {
             System.out.println("Eingefügt in Person:\nPpersonID: " + this.personID + "\nname: " + this.name);
         }
+
         return status;
     }
     /*

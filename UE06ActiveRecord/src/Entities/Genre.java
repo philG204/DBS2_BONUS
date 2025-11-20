@@ -63,4 +63,11 @@ public class Genre implements DbActions {
 //        dbManager.executeInsert(stmt);
         return status;
     }
+    public int getGenreID() throws SQLException {
+        String query =  "SELECT genreID FROM Genre WHERE genre = ?" ;
+        PreparedStatement stmt = DbManager.getConnection().prepareStatement(query);
+        stmt.setString(1, genre);
+        long id = dbManager.getID(stmt);
+        return (int) id;
+    }
 }

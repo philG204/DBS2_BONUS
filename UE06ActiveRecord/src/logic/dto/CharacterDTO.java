@@ -1,5 +1,8 @@
 package logic.dto;
 
+import Entities.Person;
+import Entities.MovieCharacter;
+
 /**
  * Data Transfer Object (DTO) fuer Objekte der Klasse Character
  * Enthaelt alles noetige fuer die Kommunikation GUI <-> Geschaeftslogik.

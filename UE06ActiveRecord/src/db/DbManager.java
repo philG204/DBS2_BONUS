@@ -51,6 +51,7 @@ public class DbManager {
         try {
             System.out.println("Verbinden mit "+url+"...");
             conn = DriverManager.getConnection(url, username, password);
+            conn.setAutoCommit(false);
             System.out.println("Verbunden mit "+url+"!");
         } catch(SQLException e){
             // e.printStackTrace();

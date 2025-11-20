@@ -72,7 +72,7 @@ public class MovieManager {
 	 * @throws Exception Beschreibt evtl. aufgetretenen Fehler
 	 */
 	public void deleteMovie(long movieId) throws Exception {
-		/* TODO */
+		Movie.delete(movieId);
 	}
 
 	/**

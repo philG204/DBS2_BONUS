@@ -58,7 +58,6 @@ public class Movie implements DbActions {
         int status = 0;
 
         dbManager =  DbManager.getInstance();
-        dbManager.connectToDB();
 
         try {
             stmt = DbManager.getConnection().prepareStatement(update_movie);
@@ -73,18 +72,18 @@ public class Movie implements DbActions {
         return status;
     }
 
-    public int delete() throws SQLException {
-        String delete_movie = "DELETE FROM Movie WHERE title = ?";
+    public static int delete(long movieId) throws SQLException {
+        String delete_movie = "DELETE FROM Movie WHERE movieID = ?";
         PreparedStatement stmt = null;
 
         int status = 0;
 
-        dbManager =  DbManager.getInstance();
-        dbManager.connectToDB();
+        DbManager dbManager =  DbManager.getInstance();
+        //dbManager.connectToDB();
 
         try {
             stmt = DbManager.getConnection().prepareStatement(delete_movie);
-            stmt.setLong(1, movieID);
+            stmt.setLong(1, movieId);
             status = stmt.executeUpdate();
         } catch(SQLException e) {
             System.err.println("Fehler beim einfügen:\n" + e.getMessage());

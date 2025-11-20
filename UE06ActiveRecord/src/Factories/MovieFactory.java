@@ -25,7 +25,6 @@ public class MovieFactory {
         Movie movie = new Movie();
 
         conn = DbManager.getInstance();
-        //conn.connectToDB();
 
         stmt = DbManager.getConnection().prepareStatement(movieId_select);
         stmt.setLong(1, id);
@@ -64,7 +63,6 @@ public class MovieFactory {
         List<Movie> movies = new ArrayList<>();
 
         conn = DbManager.getInstance();
-        //conn.connectToDB();
 
         //stmt = conn.getConnection().prepareStatement(movieId_select);
         stmt = DbManager.getConnection().prepareStatement(movieId_select);

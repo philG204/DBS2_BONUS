@@ -42,45 +42,4 @@ public class Person implements DbActions {
         }
         return status;
     }
-    /*
-    liefert die ID als ResultSet zurück
-    akzeptiert einen Namen als Eingabe
-    wirft keine eigene SQLException ruft aber Methoden auf, welche Exceptions werfen
-     */
-    public ResultSet getIdAsResultSet(String name) throws SQLException {
-
-        PreparedStatement stmt = DbManager.getConnection().prepareStatement("SELECT ID FROM Person WHERE name = ?");
-        stmt.setString(1, name);
-        //ResultSet rs = DbManager.getInstance().executeSelect(stmt);
-        return null;
-    }
-    /*
-    gibt mehrere Namen in einem ResultSet zurück akzeptiert einen Namen
-     */
-    public ResultSet getNameListAsResultSet (String name) throws SQLException {
-        PreparedStatement stmt = DbManager.getConnection().prepareStatement("SELECT name FROM Person WHERE name = LIKE %?%");
-        stmt.setString(1, name);
-        //ResultSet rs = DbManager.getInstance().executeSelect(stmt);
-        return null;
-    }
-    public ResultSet getNameAsResultSet(String name) throws SQLException {
-        PreparedStatement stmt = DbManager.getConnection().prepareStatement("SELECT name FROM Person WHERE name = ?");
-        stmt.setString(1, name);
-        //ResultSet rs = DbManager.getInstance().executeSelect(stmt);
-        return null;
-    }
-
-    public static List<Map<String, Object>> getPersons(String name) throws SQLException {
-        PreparedStatement stmt = DbManager.getConnection().prepareStatement("SELECT name FROM Person WHERE name LIKE ?");
-        stmt.setString(1, "%" + name + "%");
-        List<Map<String, Object>> rs = DbManager.getInstance().executeSelect(stmt);
-        return rs;
-    }
-
-    public static List<Map<String, Object>> getPerson(String name) throws SQLException {
-        PreparedStatement stmt = DbManager.getConnection().prepareStatement("SELECT * FROM Person WHERE name = ?");
-        stmt.setString(1, name);
-        List<Map<String, Object>> rs = DbManager.getInstance().executeSelect(stmt);
-        return rs;
-    }
 }

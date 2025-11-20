@@ -1,8 +1,11 @@
 package logic;
 
 import Entities.Person;
+import Factories.PersonFactory;
+import db.DbManager;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -16,17 +19,23 @@ public class PersonManager {
 	 * @throws Exception Beschreibt evtl. aufgetretenen Fehler
 	 */
 	public List<String> getPersonList(String name) throws Exception {
-		List <String> persons = new ArrayList<String>();
-        List<Map<String, Object>> allPersons = Person.getPersons(name);
-        //if(allPersons != null) {
-        //    return null;
-        //}
-        for (Map<String, Object> row : allPersons) {
-            System.out.println("ID = " + row.get("id"));
-            System.out.println("Name = " + row.get("genre"));
-            persons.add((String) row.get("name"));
+
+        try{
+            List <String> persons = new ArrayList<String>();
+            List<Map<String, Object>> allPersons = PersonFactory.getPersons(name);
+            DbManager.getConnection().commit();
+
+            for (Map<String, Object> row : allPersons) {
+                System.out.println("ID = " + row.get("id"));
+                System.out.println("Name = " + row.get("genre"));
+                persons.add((String) row.get("name"));
+            }
+            return persons;
+        } catch(SQLException e){
+            System.out.println("Fehler: " + e.getStackTrace());
+            DbManager.getConnection().rollback();
+            throw new RuntimeException(e);
         }
-		return persons;
 	}
 
 	/**
@@ -37,24 +46,20 @@ public class PersonManager {
 	 * @throws Exception Beschreibt evtl. aufgetretenen Fehler
 	 */
 	public int getPerson(String name) throws Exception {
-        List<Map<String, Object>> person = Person.getPerson(name);
+        try {
+            List<Map<String, Object>> person = PersonFactory.getPerson(name);
+            DbManager.getConnection().commit();
 
-        if(person == null) {
-            Exception Exception = new Exception();
-            throw Exception;
+            if(person == null) {
+                Exception Exception = new Exception();
+                throw Exception;
+            }
+            Map<String, Object> id = person.get(0);
+            return Integer.parseInt(id.get("personid").toString());
+        } catch (SQLException e){
+            System.out.println("Fehler: " + e.getStackTrace());
+            DbManager.getConnection().rollback();
+            throw new RuntimeException(e);
         }
-        Map<String, Object> id = person.get(0);
-		return Integer.parseInt(id.get("personid").toString());
 	}
-    //eigene Methode hat nichts mit der Abgabe zu tun
-    public void getNameFromPerson(String name) throws Exception {
-        Person p = new Person();
-        ResultSet rs = p.getNameAsResultSet(name);
-        if(!rs.next()) {
-            return;
-        }
-        while(rs.next()) {
-            System.out.println(rs.getString(1));
-        }
-    }
 }

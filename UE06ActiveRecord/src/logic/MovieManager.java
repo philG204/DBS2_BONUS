@@ -1,11 +1,13 @@
 package logic;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import Entities.Genre;
 import Entities.Movie;
 import Factories.MovieFactory;
+import db.DbManager;
 import logic.dto.CharacterDTO;
 import logic.dto.MovieDTO;
 
@@ -72,7 +74,16 @@ public class MovieManager {
 	 * @throws Exception Beschreibt evtl. aufgetretenen Fehler
 	 */
 	public void deleteMovie(long movieId) throws Exception {
-		Movie.delete(movieId);
+		try{
+            Movie m = new Movie();
+            m.SetId(movieId);
+            m.delete(movieId);
+            DbManager.getConnection().commit();
+        } catch(SQLException e){
+            System.out.println("Fehler: " + e.getStackTrace());
+            DbManager.getConnection().rollback();
+            throw new RuntimeException(e);
+        }
 	}
 
 	/**

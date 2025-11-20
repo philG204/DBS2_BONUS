@@ -72,14 +72,13 @@ public class Movie implements DbActions {
         return status;
     }
 
-    public static int delete(long movieId) throws SQLException {
+    public int delete(long movieId) throws SQLException {
         String delete_movie = "DELETE FROM Movie WHERE movieID = ?";
         PreparedStatement stmt = null;
 
         int status = 0;
 
-        DbManager dbManager =  DbManager.getInstance();
-        //dbManager.connectToDB();
+        dbManager.getInstance();
 
         try {
             stmt = DbManager.getConnection().prepareStatement(delete_movie);

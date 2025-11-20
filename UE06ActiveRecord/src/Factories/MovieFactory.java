@@ -45,7 +45,6 @@ public class MovieFactory {
             movie.setType((String)row.get("type"));
         }
         return movie;
-
     }
 
     /**
@@ -55,16 +54,13 @@ public class MovieFactory {
      * @throws SQLException
      */
     public static List<Movie> MovieFindByTitle(String title) throws SQLException{
-        //String movieId_select = "SELECT movieID, year, type FROM Movie WHERE title = ?";
         String movieId_select = "SELECT movieID, title, year, type FROM Movie WHERE title LIKE ? ";
         PreparedStatement stmt = null;
         List<Map<String, Object>> rs = null;
-        //List<Movie> movies = null;
         List<Movie> movies = new ArrayList<>();
 
         conn = DbManager.getInstance();
 
-        //stmt = conn.getConnection().prepareStatement(movieId_select);
         stmt = DbManager.getConnection().prepareStatement(movieId_select);
         stmt.setString(1, "%"+title+"%");
         rs = conn.executeSelect(stmt);

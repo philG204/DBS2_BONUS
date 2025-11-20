@@ -1,11 +1,14 @@
 package logic;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import Entities.Genre;
+import Factories.GenreFactory;
+import db.DbManager;
 
 public class GenreManager {
 
@@ -16,16 +19,21 @@ public class GenreManager {
 	 * @throws Exception error describing e.g. the database problem
 	 */
 	public List<String> getGenres() throws Exception {
-		List<String> genres = new ArrayList<String>();
-        List<Map<String, Object>>  allGenres = Genre.getALlGenres();
+        try{
+            List<String> genres = new ArrayList<String>();
+            List<Map<String, Object>>  allGenres = GenreFactory.getALlGenres();
+            DbManager.getConnection().commit();
 
-        for (Map<String, Object> row : allGenres) {
-            System.out.println("ID = " + row.get("id"));
-            System.out.println("Name = " + row.get("genre"));
-            genres.add((String) row.get("genre"));
+            for (Map<String, Object> row : allGenres) {
+                System.out.println("ID = " + row.get("id"));
+                System.out.println("Name = " + row.get("genre"));
+                genres.add((String) row.get("genre"));
+            }
+            return genres;
+        } catch (SQLException e) {
+            System.out.println("Fehler");
+            DbManager.getConnection().rollback();
+            throw new RuntimeException(e);
         }
-		return genres;
 	}
-
-
 }

@@ -68,11 +68,9 @@ public class DbManager {
         int status = 0;
         try {
             stmt.executeUpdate();
-            getConnection().commit();
         } catch (SQLException e) {
             System.out.println("Fehler beim Einfügen.\nQuery: "+stmt.toString());
             status = 1;
-            getConnection().rollback();
             throw new RuntimeException(e);
 
         }
@@ -141,11 +139,9 @@ public class DbManager {
                 rows.add(row);
             }
 
-            DbManager.getConnection().commit();
             return rows;
         } catch (SQLException e) {
             System.err.println("Fehler beim Auslesen.\nQuery: "+stmt.toString());
-            DbManager.getConnection().rollback();
             throw new RuntimeException(e);
 
         } finally {

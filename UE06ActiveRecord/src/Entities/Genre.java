@@ -24,18 +24,6 @@ public class Genre implements DbActions {
         this.genre = genre;
     }
 
-    public static List<Map<String, Object>>  getALlGenres() throws SQLException{
-        String allGenres_sql = "SELECT genre FROM Genre";
-        PreparedStatement stmt = null;
-        List<Map<String, Object>> rs = null;
-        DbManager dbManager1 = null;
-
-        dbManager1 = DbManager.getInstance();
-        stmt = DbManager.getConnection().prepareStatement(allGenres_sql);
-        rs = dbManager1.executeSelect(stmt);
-        return rs;
-    }
-
     public int insert() throws SQLException {
         int status = 0;
         PreparedStatement stmt = null, stmt2 = null;

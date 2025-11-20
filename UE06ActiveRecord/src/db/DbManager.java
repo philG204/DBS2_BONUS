@@ -64,13 +64,15 @@ public class DbManager {
      * Fügt einen neuen Datensatz in eine Tabelle ein.
      * @param stmt
      */
-    public int executeInsert(PreparedStatement stmt){
+    public int executeInsert(PreparedStatement stmt) throws SQLException {
         int status = 0;
         try {
             stmt.executeUpdate();
+            getConnection().commit();
         } catch (SQLException e) {
             System.out.println("Fehler beim Einfügen.\nQuery: "+stmt.toString());
             status = 1;
+            getConnection().rollback();
             throw new RuntimeException(e);
 
         }
@@ -123,7 +125,7 @@ public class DbManager {
      * @param stmt
      * @return ResultSet
      */
-    public List<Map<String, Object>> executeSelect(PreparedStatement stmt){
+    public List<Map<String, Object>> executeSelect(PreparedStatement stmt) throws SQLException {
         List<Map<String, Object>> rows = new ArrayList<>();
 
         try {
@@ -138,9 +140,12 @@ public class DbManager {
                 }
                 rows.add(row);
             }
+
+            DbManager.getConnection().commit();
             return rows;
         } catch (SQLException e) {
             System.err.println("Fehler beim Auslesen.\nQuery: "+stmt.toString());
+            DbManager.getConnection().rollback();
             throw new RuntimeException(e);
 
         } finally {

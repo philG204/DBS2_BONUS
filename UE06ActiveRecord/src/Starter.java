@@ -19,7 +19,7 @@ public class Starter {
             DBConnection.open();
         } catch (Exception e) {
             e.printStackTrace();
-			System.exit(1);
+			throw new RuntimeException();
         }
         SearchMovieDialogCallback callback = new SearchMovieDialogCallback();
 		SearchMovieDialog sd = new SearchMovieDialog(callback);

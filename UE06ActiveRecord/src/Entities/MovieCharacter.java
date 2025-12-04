@@ -81,4 +81,20 @@ public class MovieCharacter implements DbActions {
         }
         return status;
     }
+    public void delete(Long movieID) throws SQLException {
+        String delete_movie = "DELETE FROM moviecharacter WHERE movieID = ?";
+        PreparedStatement stmt = null;
+
+        int status = 0;
+
+        dbManager.getInstance();
+
+        try {
+            stmt = DbManager.getConnection().prepareStatement(delete_movie);
+            stmt.setLong(1, movieID);
+            status = stmt.executeUpdate();
+        } catch(SQLException e) {
+            System.err.println("Fehler beim einfügen:\n" + e.getMessage());
+        }
+    }
 }

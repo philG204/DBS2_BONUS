@@ -73,6 +73,8 @@ public class Movie implements DbActions {
     }
 
     public int delete(long movieId) throws SQLException {
+        MovieCharacter m = new MovieCharacter();
+        m.delete(movieId);
         String delete_movie = "DELETE FROM Movie WHERE movieID = ?";
         PreparedStatement stmt = null;
 
